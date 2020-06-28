@@ -1,0 +1,91 @@
+#pragma once
+#include <stdint.h>
+#include <stddef.h>
+
+#define CONCAT(a, b) _CONCAT(a, b)
+#define _CONCAT(a, b) a ## b
+
+#define PRAGMA(xArg) _Pragma(#xArg)
+
+//#define override
+
+typedef int8_t I8;
+typedef uint8_t U8;
+typedef int16_t I16;
+typedef uint16_t U16;
+typedef int32_t I32;
+typedef uint32_t U32;
+typedef int32_t I64;
+typedef uint32_t U64;
+
+typedef int_least8_t LI8;
+typedef uint_least8_t LU8;
+typedef int_least16_t LI16;
+typedef uint_least16_t LU16;
+typedef int_least32_t LI32;
+typedef uint_least32_t LU32;
+typedef int_least32_t LI64;
+typedef uint_least32_t LU64;
+
+typedef int_fast8_t FI8;
+typedef uint_fast8_t FU8;
+typedef int_fast16_t FI16;
+typedef uint_fast16_t FU16;
+typedef int_fast32_t FI32;
+typedef uint_fast32_t FU32;
+typedef int_fast32_t FI64;
+typedef uint_fast32_t FU64;
+
+typedef int Z;
+typedef int Int;
+typedef int UInt;
+
+typedef void Void;
+typedef bool Bool;
+
+#if 0
+#include <cstdlib>
+Int randomInt(Int a,  Int b) {
+  return a + rand() % (b - a + 1);
+}
+#endif
+
+typedef ptrdiff_t Size;
+
+template<class Type, Size n>
+Size arraySize( Type (&)[n] ) {
+  return n;
+}
+
+template<typename T> void swap(T &a, T &b) {
+  T temp = a; a = b; b = temp;
+}
+
+#ifndef nop
+  inline void nop() {
+
+  }
+#endif
+
+#if 0
+int x;
+run {
+  std::cout << "run" << std::endl;
+}
+#endif
+#ifdef __COUNTER__
+  #define run _RUN_ID(__COUNTER__)
+#else
+  #define run _RUN_ID(__LINE__)
+#endif
+
+#define _RUN_ID(ID) _RUN(CONCAT(Run, ID), CONCAT(runMethod, ID), CONCAT(runInstance, ID))
+#define _RUN(_classNameArg, _methodNameArg, _instanceNameArg) \
+void _methodNameArg(); \
+class _classNameArg { \
+  public: \
+  _classNameArg() { \
+    _methodNameArg(); \
+  } \
+} _instanceNameArg; \
+void _methodNameArg()
