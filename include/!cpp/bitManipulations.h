@@ -106,6 +106,13 @@ inline uint16_t changeByteEndian(uint16_t x) {
   return (uint16_t(uint8_t(x >> 0)) << 8) | (uint16_t(uint8_t(x >> 8)) << 0);
 }
 
+#ifdef UINT64_MAX
+inline uint64_t changeByteEndian(uint64_t x) {
+  return (uint64_t(uint8_t(x >> 0)) << 56) | (uint64_t(uint8_t(x >> 8)) << 48) | (uint64_t(uint8_t(x >> 16)) << 40) | (uint64_t(uint8_t(x >> 24)) << 32) | (uint64_t(uint8_t(x >> 32)) << 24) | (uint64_t(uint8_t(x >> 40)) << 16) | (uint64_t(uint8_t(x >> 48)) << 8) | (uint64_t(uint8_t(x >> 56)) << 0);
+}
+#endif
+
+
 inline uint32_t changeByteEndian(uint32_t x) {
   // return (uint8_t(x >> 0) << 24) | (uint8_t(x >> 8) << 16) | (uint8_t(x >> 16) << 8) | (uint8_t(x >> 24) << 0);
   return (uint32_t(uint8_t(x >> 0)) << 24) | (uint32_t(uint8_t(x >> 8)) << 16) | (uint32_t(uint8_t(x >> 16)) << 8) | (uint32_t(uint8_t(x >> 24)) << 0);
