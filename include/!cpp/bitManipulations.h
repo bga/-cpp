@@ -30,6 +30,12 @@
   #define staticSwapBytes64(x) ((U8((x) >> 0) << 56) | (U8((x) >> 8) << 48) | (U8((x) >> 16) << 40) | (U8((x) >> 24) << 32) | (U8((x) >> 32) << 24) | (U8((x) >> 40) << 16) | (U8((x) >> 40) << 8) | (U8((x) >> 48) << 0))
 #endif
 
+#define makeU32leFrom4U8(b3, b2, b1, b0) (((FU32)(b0)) | (((FU32)(b1)) << 8) | (((FU32)(b2)) << 16) | (((FU32)(b3)) << 24))
+#define makeU32beFrom4U8(b3, b2, b1, b0) (((FU32)(b3)) | (((FU32)(b2)) << 8) | (((FU32)(b1)) << 16) | (((FU32)(b0)) << 24))
+#define makeU32leFrom2U16le(b1, b0) (((FU32)(b1)) | (((FU32)(b0)) << 16))
+#define makeU32leFrom2U16be(b1, b0) (((FU32)(staticSwapBytes16(b1))) | (((FU32)(staticSwapBytes16(b0))) << 16))
+#define makeU32beFrom2U16be(b1, b0) (((FU32)(b0)) | (((FU32)(b1)) << 16))
+#define makeU32beFrom2U16le(b1, b0) (((FU32)(staticSwapBytes16(b0))) | (((FU32)(staticSwapBytes16(b1))) << 16))
 
 namespace BitRotate {
   template<typename TArg> struct getTotalBitsCount;
