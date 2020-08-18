@@ -24,10 +24,10 @@
 
 #define setBitMaskedValues(destArg, destShiftArg, maskArg, srcArg) (destArg) = ((destArg) & ~(maskArg << (destShiftArg))) | (((srcArg) & (maskArg)) << (destShiftArg))
 
-#define staticSwapBytes16(x) ((U8((x) >> 0) << 8) | (U8((x) >> 8) << 0))
-#define staticSwapBytes32(x) ((U8((x) >> 0) << 24) | (U8((x) >> 8) << 16) | (U8((x) >> 16) << 8) | (U8((x) >> 24) << 0))
+#define staticSwapBytes16(x) ((U16(U8((x) >> 0)) << 8) | (U16(U8((x) >> 8)) << 8))
+#define staticSwapBytes32(x) ((U32(U8((x) >> 0)) << 24) | (U32(U8((x) >> 8)) << 16) | (U32(U8((x) >> 16)) << 8) | (U32(U8((x) >> 24)) << 0))
 #ifdef UINT64_MAX
-  #define staticSwapBytes64(x) ((U8((x) >> 0) << 56) | (U8((x) >> 8) << 48) | (U8((x) >> 16) << 40) | (U8((x) >> 24) << 32) | (U8((x) >> 32) << 24) | (U8((x) >> 40) << 16) | (U8((x) >> 40) << 8) | (U8((x) >> 48) << 0))
+  #define staticSwapBytes64(x) ((U64(U8((x) >> 0)) << 56) | (U64(U8((x) >> 8)) << 48) | (U64(U8((x) >> 16)) << 40) | (U64(U8((x) >> 24)) << 32) | (U64(U8((x) >> 32)) << 24) | (U64(U8((x) >> 40)) << 16) | (U64(U8((x) >> 40)) << 8) | (U64(U8((x) >> 48)) << 0))
 #endif
 
 #define makeU32leFrom4U8(b3, b2, b1, b0) (((FU32)(b0)) | (((FU32)(b1)) << 8) | (((FU32)(b2)) << 16) | (((FU32)(b3)) << 24))
