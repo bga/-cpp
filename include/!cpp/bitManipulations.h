@@ -24,12 +24,6 @@
 
 #define setBitMaskedValues(destArg, destShiftArg, maskArg, srcArg) (destArg) = ((destArg) & ~(maskArg << (destShiftArg))) | (((srcArg) & (maskArg)) << (destShiftArg))
 
-#define staticSwapBytes16(x) ((U16(U8((x) >> 0)) << 8) | (U16(U8((x) >> 8)) << 8))
-#define staticSwapBytes32(x) ((U32(U8((x) >> 0)) << 24) | (U32(U8((x) >> 8)) << 16) | (U32(U8((x) >> 16)) << 8) | (U32(U8((x) >> 24)) << 0))
-#ifdef UINT64_MAX
-  #define staticSwapBytes64(x) ((U64(U8((x) >> 0)) << 56) | (U64(U8((x) >> 8)) << 48) | (U64(U8((x) >> 16)) << 40) | (U64(U8((x) >> 24)) << 32) | (U64(U8((x) >> 32)) << 24) | (U64(U8((x) >> 40)) << 16) | (U64(U8((x) >> 40)) << 8) | (U64(U8((x) >> 48)) << 0))
-#endif
-
 #define makeU32leFrom4U8(b3, b2, b1, b0) (((FU32)(b0)) | (((FU32)(b1)) << 8) | (((FU32)(b2)) << 16) | (((FU32)(b3)) << 24))
 #define makeU32beFrom4U8(b3, b2, b1, b0) (((FU32)(b3)) | (((FU32)(b2)) << 8) | (((FU32)(b1)) << 16) | (((FU32)(b0)) << 24))
 #define makeU32leFrom2U16le(b1, b0) (((FU32)(b1)) | (((FU32)(b0)) << 16))
@@ -102,21 +96,24 @@ template<typename TArg> inline TArg bitRotate(TArg v, int n) {
 template<typename IntArg>
 IntArg changeByteEndian(IntArg x);
 
+#define staticSwapBytes16(x) ((U16(U8((x) >> 0)) << 8) | (U16(U8((x) >> 8)) << 8))
+
 inline uint16_t changeByteEndian(uint16_t x) {
-  return (uint16_t(uint8_t(x >> 0)) << 8) | (uint16_t(uint8_t(x >> 8)) << 0);
+  return staticSwapBytes16(x);
+}
+
+#define staticSwapBytes32(x) ((U32(U8((x) >> 0)) << 24) | (U32(U8((x) >> 8)) << 16) | (U32(U8((x) >> 16)) << 8) | (U32(U8((x) >> 24)) << 0))
+inline uint32_t changeByteEndian(uint32_t x) {
+  return staticSwapBytes32(x);
 }
 
 #ifdef UINT64_MAX
-inline uint64_t changeByteEndian(uint64_t x) {
-  return (uint64_t(uint8_t(x >> 0)) << 56) | (uint64_t(uint8_t(x >> 8)) << 48) | (uint64_t(uint8_t(x >> 16)) << 40) | (uint64_t(uint8_t(x >> 24)) << 32) | (uint64_t(uint8_t(x >> 32)) << 24) | (uint64_t(uint8_t(x >> 40)) << 16) | (uint64_t(uint8_t(x >> 48)) << 8) | (uint64_t(uint8_t(x >> 56)) << 0);
-}
+  #define staticSwapBytes64(x) (U64(U8((x) >> 0)) << 56) | (U64(U8((x) >> 8)) << 48) | (U64(U8((x) >> 16)) << 40) | (U64(U8((x) >> 24)) << 32) | (U64(U8((x) >> 32)) << 24) | (U64(U8((x) >> 40)) << 16) | (U64(U8((x) >> 48)) << 8) | (U64(U8((x) >> 56)) << 0);
+  inline uint64_t changeByteEndian(uint64_t x) {
+    return staticSwapBytes64(x);
+  }
 #endif
 
-
-inline uint32_t changeByteEndian(uint32_t x) {
-  // return (uint8_t(x >> 0) << 24) | (uint8_t(x >> 8) << 16) | (uint8_t(x >> 16) << 8) | (uint8_t(x >> 24) << 0);
-  return (uint32_t(uint8_t(x >> 0)) << 24) | (uint32_t(uint8_t(x >> 8)) << 16) | (uint32_t(uint8_t(x >> 16)) << 8) | (uint32_t(uint8_t(x >> 24)) << 0);
-}
 
 #define isPowerOf2(vArg) (((vArg) & ((vArg) - 1)) == 0)
 template<typename IntArg, typename MaxIntArg>
