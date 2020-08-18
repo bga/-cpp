@@ -103,11 +103,12 @@ template<typename IntArg>
 IntArg changeByteEndian(IntArg x);
 
 inline uint16_t changeByteEndian(uint16_t x) {
-  return (uint8_t(x >> 0) << 8) | (uint8_t(x >> 8) << 0);
+  return (uint16_t(uint8_t(x >> 0)) << 8) | (uint16_t(uint8_t(x >> 8)) << 0);
 }
 
 inline uint32_t changeByteEndian(uint32_t x) {
-  return (uint8_t(x >> 0) << 24) | (uint8_t(x >> 8) << 16) | (uint8_t(x >> 16) << 8) | (uint8_t(x >> 24) << 0);
+  // return (uint8_t(x >> 0) << 24) | (uint8_t(x >> 8) << 16) | (uint8_t(x >> 16) << 8) | (uint8_t(x >> 24) << 0);
+  return (uint32_t(uint8_t(x >> 0)) << 24) | (uint32_t(uint8_t(x >> 8)) << 16) | (uint32_t(uint8_t(x >> 16)) << 8) | (uint32_t(uint8_t(x >> 24)) << 0);
 }
 
 #define isPowerOf2(vArg) (((vArg) & ((vArg) - 1)) == 0)
