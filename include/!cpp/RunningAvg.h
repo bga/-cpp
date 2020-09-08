@@ -46,10 +46,10 @@ class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
   
   public:
   
-  Self(): index(~U8(0)) {  }
+  Self(): index(U8(~0)) {  }
   
   void add(ArrayType v) {
-    if(p.index == ~U8(0)) {
+    if(p.index == U8(~0)) {
       forInc(int, i, 0, size) {
         p.data[i] = v;
       }
