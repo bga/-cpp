@@ -45,6 +45,9 @@ class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
   U8 index = ~0;
   
   public:
+  
+  Self(): index(~U8(0)) {  }
+  
   void add(ArrayType v) {
     if(p.index == ~U8(0)) {
       forInc(int, i, 0, size) {
