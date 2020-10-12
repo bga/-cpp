@@ -22,7 +22,7 @@
 
 #define setBitValue(vArg, bitNumberArg, bitValueArg) ((bitValueArg) ? setBit((vArg), (bitNumberArg)) : clearBit((vArg), (bitNumberArg)))
 
-#define setBitMaskedValues(destArg, destShiftArg, maskArg, srcArg) (destArg) = ((destArg) & ~(maskArg << (destShiftArg))) | (((srcArg) & (maskArg)) << (destShiftArg))
+#define setBitMaskedValues(destArg, destShiftArg, maskArg, srcArg) (destArg) = ((destArg) & ~((maskArg) << (destShiftArg))) | (((srcArg) & (maskArg)) << (destShiftArg))
 
 #define makeU32leFrom4U8(b3, b2, b1, b0) (((FU32)(b0)) | (((FU32)(b1)) << 8) | (((FU32)(b2)) << 16) | (((FU32)(b3)) << 24))
 #define makeU32beFrom4U8(b3, b2, b1, b0) (((FU32)(b3)) | (((FU32)(b2)) << 8) | (((FU32)(b1)) << 16) | (((FU32)(b0)) << 24))
