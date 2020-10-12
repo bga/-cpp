@@ -42,7 +42,7 @@ class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
   private:
   ArrayType data[size];
   SumType sum; 
-  U8 index = ~0;
+  U8 index;
   
   public:
   
