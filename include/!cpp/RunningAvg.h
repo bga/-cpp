@@ -59,7 +59,7 @@ class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
       p.sum += v - p.data[p.index];
       p.data[p.index] = v;
       //# avr-gcc bug
-      val size2 = size;
+      size_t size2 = size;
       cycleInc(p.index, size2);
     }
   }
