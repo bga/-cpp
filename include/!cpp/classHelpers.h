@@ -14,5 +14,7 @@
 	limitations under the License.
 */
 
+#pragma once
+
 #define p (*this)
 #define abstract (void (*)(void))(0)()
