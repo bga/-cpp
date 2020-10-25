@@ -1,3 +1,20 @@
+/*
+  Copyright 2020 Bga <bga.email@gmail.com>
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+
 #pragma once
 #include <stdint.h>
 #include <!cpp/common.h>
@@ -117,7 +134,7 @@ inline uint32_t changeByteEndian(uint32_t x) {
 
 #define isPowerOf2(vArg) (((vArg) & ((vArg) - 1)) == 0)
 template<typename IntArg, typename MaxIntArg>
-void cycleInc(IntArg& vArg, const MaxIntArg& maxVArg) {
+IntArg cycleInc(IntArg& vArg, const MaxIntArg& maxVArg) {
   if(isPowerOf2(maxVArg)) {
     vArg += 1;
     vArg &= maxVArg - 1;
@@ -131,6 +148,7 @@ void cycleInc(IntArg& vArg, const MaxIntArg& maxVArg) {
 
     }
   }
+  return vArg;
 }
 
 template<typename IntArg>
