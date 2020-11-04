@@ -18,10 +18,13 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#define STR(x) _STR(x)
+#define _STR(x) #x
+
 #define CONCAT(a, b) _CONCAT(a, b)
 #define _CONCAT(a, b) a ## b
 
-#define PRAGMA(xArg) _Pragma(#xArg)
+#define PRAGMA(xArg) _Pragma(STR(xArg))
 
 //#define override
 
