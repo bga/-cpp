@@ -61,7 +61,7 @@ namespace Log2fix { namespace details {
 	
 	template<class TArg> struct Consts;
 	#ifdef UINT64_MAX
-		template<> struct Consts<uint32_t> { enum { INV_LOG2_E_Q1DOT_N_SUB_1 = UINT64_C(0x58b90bfc), INV_LOG2_10_Q1DOT_N_SUB_1 =  UINT64_C(0x268826a1) }; };
+		template<> struct Consts<uint32_t> { enum { INV_LOG2_E_Q1DOT_N_SUB_1 = UINT32_C(0x58b90bfc), INV_LOG2_10_Q1DOT_N_SUB_1 =  UINT32_C(0x268826a1) }; };
 	#endif
 } }
 
