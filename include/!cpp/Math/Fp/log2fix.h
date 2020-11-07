@@ -61,7 +61,7 @@ namespace Log2fix { namespace details {
 	
 	template<class TArg> struct Consts;
 	#ifdef UINT64_MAX
-		template<> struct Consts<uint32_t> { enum { INV_LOG2_E_Q1DOT_N_SUB_1 = UINT32_C(0x58b90bfc), INV_LOG2_10_Q1DOT_N_SUB_1 =  UINT32_C(0x268826a1) }; };
+		template<> struct Consts<uint32_t> { enum { INV_LOG2_E_Q0DOT_N = UINT32_C(2977044471), INV_LOG2_10_Q0DOT_N =  UINT32_C(1292913986) }; };
 	#endif
 } }
 
@@ -106,17 +106,17 @@ TArg log2fix(TArg x, size_t precision) {
 template<class TArg>
 TArg logfix(TArg x, size_t precision) {
 	typedef typename Log2fix::details::DoublePrec<TArg>::Ret T2Arg; 
-	T2Arg t = T2Arg(log2fix(x, precision)) * Log2fix::details::Consts<TArg>::INV_LOG2_E_Q1DOT_N_SUB_1;
+	T2Arg t = T2Arg(log2fix(x, precision)) * Log2fix::details::Consts<TArg>::INV_LOG2_E_Q0DOT_N;
 	
-	return t >> (sizeof(TArg) * 8 - 1);
+	return t >> (sizeof(TArg) * 8);
 }
 
 template<class TArg>
 TArg log10fix(TArg x, size_t precision) {
 	typedef typename Log2fix::details::DoublePrec<TArg>::Ret T2Arg; 
-	T2Arg t = T2Arg(log2fix(x, precision)) * Log2fix::details::Consts<TArg>::INV_LOG2_10_Q1DOT_N_SUB_1;
+	T2Arg t = T2Arg(log2fix(x, precision)) * Log2fix::details::Consts<TArg>::INV_LOG2_10_Q0DOT_N;
 	
-	return t >> (sizeof(TArg) * 8 - 1);
+	return t >> (sizeof(TArg) * 8);
 }
 
 // [1] C. S. Turner,  "A Fast Binary Logarithm Algorithm", IEEE Signal
