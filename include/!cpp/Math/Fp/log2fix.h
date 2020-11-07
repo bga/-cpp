@@ -60,6 +60,8 @@ namespace Log2fix { namespace details {
 	#endif
 	
 	template<class TArg> struct Consts;
+	template<> struct Consts<uint8_t> { enum { INV_LOG2_E_Q0DOT_N = UINT8_C(177), INV_LOG2_10_Q0DOT_N =  UINT8_C(77) }; };
+	template<> struct Consts<uint16_t> { enum { INV_LOG2_E_Q0DOT_N = UINT16_C(45426), INV_LOG2_10_Q0DOT_N =  UINT16_C(19728) }; };
 	#ifdef UINT64_MAX
 		template<> struct Consts<uint32_t> { enum { INV_LOG2_E_Q0DOT_N = UINT32_C(2977044471), INV_LOG2_10_Q0DOT_N =  UINT32_C(1292913986) }; };
 	#endif
@@ -127,5 +129,7 @@ TArg log10fix(TArg x, size_t precision) {
 example("log2fix") {
 	using Math::Fp::logfix;
 	
+	assert_eq(logfix(uint8_t(0x62), 8 - 5), 0x13);
+	assert_eq(logfix(uint16_t(0x6200), 16 - 5), 0x140A);
 	assert_eq(logfix(uint32_t(0x62000000), 32 - 5), 0x140B512E);
 }
