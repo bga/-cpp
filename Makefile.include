@@ -15,9 +15,10 @@
 
 space :=
 space +=
-nospaces = $(subst $(space),-,$1)
+pathToName = $(subst /,_,$(subst $(space),-,$1))
 
-PROJECT = $(call nospaces,$(shell basename "`pwd`"))
+SELF_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+PROJECT = $(call pathToName,$(dir $(SELF_PATH)))
 
 TARGET_EXEC ?= $(PROJECT).exe
 
