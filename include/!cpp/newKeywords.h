@@ -40,6 +40,13 @@
 #endif
 #define forInc(typeArg, kNameArg, beginArg, endArg) for(typeArg kNameArg = (beginArg), _end = (endArg); kNameArg < _end; kNameArg += 1)
 
+#if 0
+  forDec(U8, i, 0, 8) {
+    printf("\n%i", i);
+  }
+#endif
+#define forDec(typeArg, kNameArg, beginArg, endArg) for(typeArg kNameArg = typeArg(endArg), _begin = typeArg(beginArg); kNameArg-- != _begin;)
+
 #define yes true
 #define no false
 
