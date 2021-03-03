@@ -118,3 +118,16 @@ class _classNameArg { \
   } \
 } _instanceNameArg; \
 void _methodNameArg()
+
+//# macro for inspecting constant expr at compile time. Still produces error
+//# TODO use warning
+#if 0
+  static_print(F_CPU / (1 << adcPrescaler))
+#endif
+/* PRAGMA(message(__FILE__ ":" STR(__LINE__) " " STR(exprArg) " =")) */ \
+#ifdef ENABLE_STATIC_PRINT
+  #define static_print(exprArg) \
+    char (*CONCAT(__inspectInt_, __LINE__))[constExpr] = 1;
+#else
+  #define static_print(exprArg)
+#endif
