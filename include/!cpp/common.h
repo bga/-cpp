@@ -18,6 +18,10 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#if defined(__IAR_SYSTEMS_ICC__ )
+  #include "common.iar.before.h"
+#endif
+
 #define STR(x) _STR(x)
 #define _STR(x) #x
 
