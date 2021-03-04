@@ -188,3 +188,27 @@ template<uintmax_t x> struct IntToMaskHelperClass {
 #define intToMaskConstExpr(xArg) IntToMaskHelperClass<(xArg)>::result
 
 #define intToMaskConstExpr(xArg) IntToMaskHelperClass<(xArg)>::result
+
+#if 0
+  enum { 
+    x = constExpr, 
+    xLog2 = log2Static(x) 
+  };
+#endif
+
+#define log2Static_g(xArg, shiftArg, TArg) ((xArg) <= (TArg(1) << (shiftArg))) ?  (shiftArg) :
+
+//# { var s = ""; for(var i = 0; i < 64; i += 1) s+= "".concat("log2Static_g(xArg, ", i, ", TArg) "); copy(s); }
+#define log2Static0_32(xArg, TArg) log2Static_g(xArg, 0, TArg) log2Static_g(xArg, 1, TArg) log2Static_g(xArg, 2, TArg) log2Static_g(xArg, 3, TArg) log2Static_g(xArg, 4, TArg) log2Static_g(xArg, 5, TArg) log2Static_g(xArg, 6, TArg) log2Static_g(xArg, 7, TArg) log2Static_g(xArg, 8, TArg) log2Static_g(xArg, 9, TArg) log2Static_g(xArg, 10, TArg) log2Static_g(xArg, 11, TArg) log2Static_g(xArg, 12, TArg) log2Static_g(xArg, 13, TArg) log2Static_g(xArg, 14, TArg) log2Static_g(xArg, 15, TArg) log2Static_g(xArg, 16, TArg) log2Static_g(xArg, 17, TArg) log2Static_g(xArg, 18, TArg) log2Static_g(xArg, 19, TArg) log2Static_g(xArg, 20, TArg) log2Static_g(xArg, 21, TArg) log2Static_g(xArg, 22, TArg) log2Static_g(xArg, 23, TArg) log2Static_g(xArg, 24, TArg) log2Static_g(xArg, 25, TArg) log2Static_g(xArg, 26, TArg) log2Static_g(xArg, 27, TArg) log2Static_g(xArg, 28, TArg) log2Static_g(xArg, 29, TArg) log2Static_g(xArg, 30, TArg) log2Static_g(xArg, 31, TArg)
+
+#define log2Static_32_64(xArg, TArg) log2Static_g(xArg, 32, TArg) log2Static_g(xArg, 33, TArg) log2Static_g(xArg, 34, TArg) log2Static_g(xArg, 35, TArg) log2Static_g(xArg, 36, TArg) log2Static_g(xArg, 37, TArg) log2Static_g(xArg, 38, TArg) log2Static_g(xArg, 39, TArg) log2Static_g(xArg, 40, TArg) log2Static_g(xArg, 41, TArg) log2Static_g(xArg, 42, TArg) log2Static_g(xArg, 43, TArg) log2Static_g(xArg, 44, TArg) log2Static_g(xArg, 45, TArg) log2Static_g(xArg, 46, TArg) log2Static_g(xArg, 47, TArg) log2Static_g(xArg, 48, TArg) log2Static_g(xArg, 49, TArg) log2Static_g(xArg, 50, TArg) log2Static_g(xArg, 51, TArg) log2Static_g(xArg, 52, TArg) log2Static_g(xArg, 53, TArg) log2Static_g(xArg, 54, TArg) log2Static_g(xArg, 55, TArg) log2Static_g(xArg, 56, TArg) log2Static_g(xArg, 57, TArg) log2Static_g(xArg, 58, TArg) log2Static_g(xArg, 59, TArg) log2Static_g(xArg, 60, TArg) log2Static_g(xArg, 61, TArg) log2Static_g(xArg, 62, TArg) log2Static_g(xArg, 63, TArg)
+
+
+#if 0
+#elif defined(UINT64_MAX)
+  #define log2Static(xArg) (log2Static0_32(xArg, UINT64_C) log2Static_32_64(xArg, UINT64_C) (-1))
+#else
+  #define log2Static(xArg) (log2Static0_32(xArg, UINT32_C) (-1))
+#endif
+
+
