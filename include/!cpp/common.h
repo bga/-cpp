@@ -126,8 +126,8 @@ void _methodNameArg()
 #endif
 /* PRAGMA(message(__FILE__ ":" STR(__LINE__) " " STR(exprArg) " =")) */ \
 #ifdef ENABLE_STATIC_PRINT
-  #define static_print(exprArg) \
+  #define static_print(constExpr) \
     char (*CONCAT(__inspectInt_, __LINE__))[constExpr] = 1;
 #else
-  #define static_print(exprArg)
+  #define static_print(constExpr)
 #endif
