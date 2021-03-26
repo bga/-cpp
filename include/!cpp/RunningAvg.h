@@ -70,6 +70,7 @@ class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
         p.data[i] = v;
       }
       p.sum = v * size;
+      p.index = 0;
     }
     else {
       p.sum += v - p.data[p.index];
