@@ -26,16 +26,20 @@
 #define bitsCountToMask(bitsCountArg) ((1 << (bitsCountArg)) - 1)
 
 #define hasBit(vArg, bitNumberArg) (((vArg) & _BV((bitNumberArg))))
+#define hasBit_noBV(vArg, bitNumberArg) (((vArg) & (bitNumberArg)))
 
 #ifndef clearBit
   #define clearBit(vArg, bitNumberArg) (((vArg) &= ~_BV((bitNumberArg))), (vArg))
 #endif // clearBit
+#define clearBit_noBV(vArg, bitNumberArg) (((vArg) &= ~(bitNumberArg)), (vArg))
 
 #ifndef setBit
   #define setBit(vArg, bitNumberArg) (((vArg) |= _BV((bitNumberArg))), (vArg))
 #endif // setBit
+#define setBit_noBV(vArg, bitNumberArg) (((vArg) |= (bitNumberArg)), (vArg))
 
 #define toggleBit(vArg, bitNumberArg) (((vArg) ^= _BV((bitNumberArg))), (vArg))
+#define toggleBit_noBV(vArg, bitNumberArg) (((vArg) ^= (bitNumberArg)), (vArg))
 
 #define setBitValue(vArg, bitNumberArg, bitValueArg) ((bitValueArg) ? setBit((vArg), (bitNumberArg)) : clearBit((vArg), (bitNumberArg)))
 
