@@ -17,6 +17,7 @@
 #pragma once
 #include <stdint.h>
 #include <stddef.h>
+#include <type_traits>
 
 #if defined(__IAR_SYSTEMS_ICC__ )
   #include "common.iar.before.h"
@@ -87,6 +88,33 @@ typedef int UInt;
 
 typedef void Void;
 typedef bool Bool;
+
+#define GEN_STATIC_ASSERT_XX_HELPER(nameArg, exprArg) \
+	template<intmax_t a, intmax_t b> struct nameArg { \
+		struct _ {  }; \
+		typedef typename std::conditional<(exprArg), int, _>::type type; \
+	};
+#define STATIC_ASSERT_XX(nameArg, aArg, bArg) \
+	struct UNIQUE_NAME { typename nameArg<(aArg), (bArg)>::type x() { return 1; } };
+
+GEN_STATIC_ASSERT_XX_HELPER(static_assert_lt_helper, a < b)
+#define static_assert_lt(aArg, bArg) STATIC_ASSERT_XX(static_assert_lt_helper, (aArg), (bArg))
+
+GEN_STATIC_ASSERT_XX_HELPER(static_assert_lte_helper, a <= b)
+#define static_assert_lte(aArg, bArg) STATIC_ASSERT_XX(static_assert_lte_helper, (aArg), (bArg))
+
+GEN_STATIC_ASSERT_XX_HELPER(static_assert_gt_helper, b < a)
+#define static_assert_gt(aArg, bArg) STATIC_ASSERT_XX(static_assert_gt_helper, (aArg), (bArg))
+
+GEN_STATIC_ASSERT_XX_HELPER(static_assert_gte_helper, b <= a)
+#define static_assert_gte(aArg, bArg) STATIC_ASSERT_XX(static_assert_gte_helper, (aArg), (bArg))
+
+GEN_STATIC_ASSERT_XX_HELPER(static_assert_eq_helper, a == b)
+#define static_assert_eq(aArg, bArg) STATIC_ASSERT_XX(static_assert_eq_helper, (aArg), (bArg))
+
+GEN_STATIC_ASSERT_XX_HELPER(static_assert_neq_helper, a != b)
+#define static_assert_neq(aArg, bArg) STATIC_ASSERT_XX(static_assert_neq_helper, (aArg), (bArg))
+
 
 #if 0
 #include <cstdlib>
