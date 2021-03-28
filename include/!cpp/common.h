@@ -22,6 +22,11 @@
   #include "common.iar.before.h"
 #endif
 
+#if defined(__GNUC__ )
+  #include "common.gcc.before.h"
+#endif
+
+
 #ifndef MAYBE_CONSTEXPR
   #define MAYBE_CONSTEXPR
 #endif
