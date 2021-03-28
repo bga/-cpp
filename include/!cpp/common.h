@@ -22,6 +22,10 @@
   #include "common.iar.before.h"
 #endif
 
+#ifndef MAYBE_CONSTEXPR
+  #define MAYBE_CONSTEXPR
+#endif
+
 #define STR(x) _STR(x)
 #define _STR(x) #x
 
@@ -29,6 +33,7 @@
 #define _CONCAT(a, b) a ## b
 
 #define PRAGMA(xArg) _Pragma(STR(xArg))
+
 
 //#define override
 
@@ -82,7 +87,7 @@ Int randomInt(Int a,  Int b) {
 typedef ptrdiff_t Size;
 
 template<class Type, Size n>
-Size arraySize( Type (&)[n] ) {
+MAYBE_CONSTEXPR Size arraySize( Type (&)[n] ) {
   return n;
 }
 
