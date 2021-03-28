@@ -73,7 +73,8 @@ class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
       p.index = 0;
     }
     else {
-      p.sum += v - p.data[p.index];
+      p.sum += v;
+      p.sum -= p.data[p.index];
       p.data[p.index] = v;
       //# avr-gcc bug
       size_t size2 = size;
