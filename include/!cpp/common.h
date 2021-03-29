@@ -118,6 +118,21 @@ GEN_STATIC_ASSERT_XX_HELPER(static_assert_neq_helper, a != b)
 GEN_STATIC_ASSERT_XX_HELPER(static_assert_hasBit_helper, a & (1 << b))
 #define static_assert_hasBit(aArg, bArg) STATIC_ASSERT_XX(static_assert_hasBit, (aArg), (bArg))
 
+template<typename TArg> TArg Math_abs(const TArg& x) {
+	return (x < 0) ? -x : x;
+}
+template<typename AArg, typename BArg> AArg Math_min(const AArg& a, const BArg& b) {
+	return (a < b) ? a : b;
+}
+template<typename AArg, typename BArg> AArg Math_max(const AArg& a, const BArg& b) {
+	return (a < b) ? b : a;
+}
+template<typename AArg, typename XArg, typename BArg> XArg Math_clamp(const AArg& a, const XArg& x, const BArg& b) {
+	return max(min(x, a), b);
+}
+template<typename TArg, typename AArg, typename BArg> TArg Math_lerp(const TArg& t, const AArg& a, const BArg& b) {
+	return t * (b - a) + a;
+}
 
 
 #if 0
