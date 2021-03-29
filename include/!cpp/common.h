@@ -41,6 +41,12 @@
 #define PRAGMA(xArg) _Pragma(STR(xArg))
 
 #ifdef __COUNTER__
+  #define UNIQUE_ID __COUNTER__
+#else
+  #define UNIQUE_ID __LINE__
+#endif
+
+#ifdef __COUNTER__
   #define UNIQUE_NAME CONCAT(dummy, __COUNTER__)
 #else
   #define UNIQUE_NAME CONCAT(dummy, __LINE__)
