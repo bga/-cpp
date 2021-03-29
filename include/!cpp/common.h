@@ -46,12 +46,7 @@
   #define UNIQUE_ID __LINE__
 #endif
 
-#ifdef __COUNTER__
-  #define UNIQUE_NAME CONCAT(dummy, __COUNTER__)
-#else
-  #define UNIQUE_NAME CONCAT(dummy, __LINE__)
-#endif
-
+#define UNIQUE_NAME CONCAT(dummy, UNIQUE_ID)
 
 //#define override
 
@@ -171,11 +166,7 @@ run {
   std::cout << "run" << std::endl;
 }
 #endif
-#ifdef __COUNTER__
-  #define run _RUN_ID(__COUNTER__)
-#else
-  #define run _RUN_ID(__LINE__)
-#endif
+#define run _RUN_ID(UNIQUE_ID)
 
 #define _RUN_ID(ID) _RUN(CONCAT(Run, ID), CONCAT(runMethod, ID), CONCAT(runInstance, ID))
 #define _RUN(_classNameArg, _methodNameArg, _instanceNameArg) \
