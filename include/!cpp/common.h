@@ -115,6 +115,10 @@ GEN_STATIC_ASSERT_XX_HELPER(static_assert_eq_helper, a == b)
 GEN_STATIC_ASSERT_XX_HELPER(static_assert_neq_helper, a != b)
 #define static_assert_neq(aArg, bArg) STATIC_ASSERT_XX(static_assert_neq_helper, (aArg), (bArg))
 
+GEN_STATIC_ASSERT_XX_HELPER(static_assert_hasBit_helper, a & (1 << b))
+#define static_assert_hasBit(aArg, bArg) STATIC_ASSERT_XX(static_assert_hasBit, (aArg), (bArg))
+
+
 
 #if 0
 #include <cstdlib>
