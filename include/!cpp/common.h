@@ -168,7 +168,7 @@ run {
 #endif
 #define run _RUN_ID(UNIQUE_ID)
 
-#define _RUN_ID(ID) _RUN(CONCAT(Run, ID), CONCAT(runMethod, ID), CONCAT(runInstance, ID))
+#define _RUN_ID(idArg) _RUN(CONCAT(Run, idArg), CONCAT(runMethod, idArg), CONCAT(runInstance, idArg))
 #define _RUN(_classNameArg, _methodNameArg, _instanceNameArg) \
 void _methodNameArg(); \
 class _classNameArg { \
