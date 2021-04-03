@@ -1,0 +1,3 @@
+[submodule "include/boost/type_traits"]
+	path = include/boost/type_traits
+	url = https://github.com/bga/type_traits
