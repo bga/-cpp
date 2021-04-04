@@ -28,6 +28,12 @@
 #endif
 
 
+//# [https://stackoverflow.com/a/3782064]
+#define IS_EMPTY_MACRO__NO_OTHER_MACRO_STARTS_WITH_THIS_NAME_
+#define IS_EMPTY_MACRO_IMPL(nameArg) defined(IS_EMPTY_MACRO__NO_OTHER_MACRO_STARTS_WITH_THIS_NAME_ ## nameArg)
+#define IS_EMPTY_MACRO(nameArg) IS_EMPTY_MACRO_IMPL(nameArg)
+
+
 #ifndef MAYBE_CONSTEXPR
   #define MAYBE_CONSTEXPR
 #endif
