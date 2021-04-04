@@ -19,7 +19,14 @@
 #include <stdint.h>
 #include <!cpp/common.h>
 
-#ifndef _BV
+#ifdef _BV
+  #undef _BV
+#endif
+#if !IS_EMPTY_MACRO(MAYBE_CONSTEXPR)
+  constexpr inline uintmax_t _BV(unsigned bitNo) {
+    return 1 << bitNo;
+  }
+#else
   #define _BV(bitNoArg) (1 << (bitNoArg))
 #endif
 
