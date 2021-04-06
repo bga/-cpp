@@ -33,6 +33,14 @@
 #define IS_EMPTY_MACRO_IMPL(nameArg) defined(IS_EMPTY_MACRO__NO_OTHER_MACRO_STARTS_WITH_THIS_NAME_ ## nameArg)
 #define IS_EMPTY_MACRO(nameArg) IS_EMPTY_MACRO_IMPL(nameArg)
 
+#if 0
+  template<class ValueArg, TEMPLATE__ENABLE_IF(boost::is_arithmetic<ValueArg>::value)>
+  ValueArg abs(ValueArg x) {
+    return (0 <= x) ? x : -x; 
+  }
+#endif
+#define TEMPLATE__ENABLE_IF(condExprArg) typename boost::enable_if<(condExprArg), int>::type = 0
+
 
 #ifndef MAYBE_CONSTEXPR
   #define MAYBE_CONSTEXPR
