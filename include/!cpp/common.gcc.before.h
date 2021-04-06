@@ -17,6 +17,6 @@
 
 #pragma once
 
-#if __cpp_constexpr >= 200704
-	#define MAYBE_CONSTEXPR
+#if defined(__cpp_constexpr) 
+	#define MAYBE_CONSTEXPR constexpr
 #endif
