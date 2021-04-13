@@ -40,7 +40,7 @@ struct Config {
 #define Self ClassName
 template<typename ConfigArg> struct Self {
 	typedef ConfigArg Config;
-	Config config;
+	Config m_config;
 
 	Self() {
 	}
