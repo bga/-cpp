@@ -131,7 +131,7 @@ BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_neq_helper, a != b)
 #define static_assert_neq(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_neq_helper, (aArg), (bArg))
 
 BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_hasBit_helper, a & (1 << b))
-#define static_assert_hasBit(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_hasBit, (aArg), (bArg))
+#define static_assert_hasBit(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_hasBit_helper, (aArg), (bArg))
 
 
 template<typename TArg> TArg Math_abs(const TArg& x) {
