@@ -31,26 +31,52 @@
 #endif
 
 #define bitsCountToMask(bitsCountArg) ((1 << (bitsCountArg)) - 1)
-
 #define hasBit(vArg, bitNumberArg) (((vArg) & _BV((bitNumberArg))))
 #define hasBitMask(vArg, bitNumberArg) (((vArg) & (bitNumberArg)))
 
-#ifndef clearBit
-  #define clearBit(vArg, bitNumberArg) (((vArg) &= ~_BV((bitNumberArg))), (vArg))
-#endif // clearBit
-#define clearBitMask(vArg, bitNumberArg) (((vArg) &= ~(bitNumberArg)), (vArg))
+template<class TArg>
+inline TArg clearBit(TArg& vArg, unsigned bitNumberArg) {
+  vArg &= ~(TArg(1) << bitNumberArg);
+  return vArg;
+}
+template<class TArg, class T2Arg>
+inline TArg clearBitMask(TArg& vArg, T2Arg maskArg) {
+  vArg &= maskArg;
+  return vArg;
+}
 
-#ifndef setBit
-  #define setBit(vArg, bitNumberArg) (((vArg) |= _BV((bitNumberArg))), (vArg))
-#endif // setBit
-#define setBitMask(vArg, bitNumberArg) (((vArg) |= (bitNumberArg)), (vArg))
+template<class TArg>
+inline TArg setBit(TArg& vArg, unsigned bitNumberArg) {
+  vArg |= (TArg(1) << bitNumberArg);
+  return vArg;
+}
+template<class TArg, class T2Arg>
+inline TArg setBitMask(TArg& vArg, T2Arg maskArg) {
+  vArg |= maskArg;
+  return vArg;
+}
 
-#define toggleBit(vArg, bitNumberArg) (((vArg) ^= _BV((bitNumberArg))), (vArg))
-#define toggleBitMask(vArg, bitNumberArg) (((vArg) ^= (bitNumberArg)), (vArg))
+template<class TArg>
+inline TArg toggleBit(TArg& vArg, unsigned bitNumberArg) {
+  return (vArg ^= (TArg(1) << bitNumberArg));
+}
+template<class TArg, class T2Arg>
+TArg toggleBitMask(TArg& vArg, T2Arg maskArg) {
+  vArg ^= maskArg;
+  return vArg;
+}
 
-#define setBitValue(vArg, bitNumberArg, bitValueArg) ((bitValueArg) ? setBit((vArg), (bitNumberArg)) : clearBit((vArg), (bitNumberArg)))
+template<class TArg>
+inline TArg setBitValue(TArg& vArg, unsigned bitNumberArg, bool isSet) {
+  return (isSet) ? setBit(vArg, bitNumberArg) : clearBit(vArg, bitNumberArg);
+}
 
-#define setBitMaskedValues(destArg, destShiftArg, maskArg, srcArg) (destArg) = ((destArg) & ~((maskArg) << (destShiftArg))) | (((srcArg) & (maskArg)) << (destShiftArg))
+template<class TArg, class T2Arg, class T3Arg>
+inline TArg setBitMaskedValues(TArg& destArg, unsigned destShiftArg, T2Arg maskArg, T3Arg srcArg) {
+  destArg &= ~(maskArg << destShiftArg);
+  destArg |= ((srcArg & maskArg) << destShiftArg);
+  return destArg;
+}
 
 #define makeU32leFrom4U8(b3, b2, b1, b0) (((FU32)(b0)) | (((FU32)(b1)) << 8) | (((FU32)(b2)) << 16) | (((FU32)(b3)) << 24))
 #define makeU32beFrom4U8(b3, b2, b1, b0) (((FU32)(b3)) | (((FU32)(b2)) << 8) | (((FU32)(b1)) << 16) | (((FU32)(b0)) << 24))
@@ -201,9 +227,9 @@ template<uintmax_t x> struct IntToMaskHelperClass {
 #define intToMaskConstExpr(xArg) IntToMaskHelperClass<(xArg)>::result
 
 #if 0
-  enum { 
-    x = constExpr, 
-    xLog2 = log2Static(x) 
+  enum {
+    x = constExpr,
+    xLog2 = log2Static(x)
   };
 #endif
 
