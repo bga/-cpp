@@ -133,6 +133,14 @@ BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_neq_helper, a != b)
 BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_hasBit_helper, a & (uintmax_t(1) << b))
 #define static_assert_hasBit(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_hasBit_helper, (aArg), (bArg))
 
+#if 0
+  static_assert_test(1, x == 1 || x == 2); //# OK
+  static_assert_test(2, x == 1 || x == 2); //# OK
+  static_assert_test(3, x == 1 || x == 2); //# FAIL
+#endif
+BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_test_helper, !!b)
+#define static_assert_test(aArg, testAExprArg) struct BGA__UNIQUE_NAME { static const intmax_t x = (aArg); BGA__STATIC_ASSERT_XX(static_assert_test_helper, x, (testAExprArg)); }
+
 
 template<typename TArg> TArg Math_abs(const TArg& x) {
 	return (x < 0) ? -x : x;
