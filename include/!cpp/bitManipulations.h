@@ -22,7 +22,7 @@
 #ifdef _BV
   #undef _BV
 #endif
-#if !IS_EMPTY_MACRO(MAYBE_CONSTEXPR)
+#if !BGA__IS_EMPTY_MACRO(BGA__MAYBE_CONSTEXPR)
   constexpr inline uintmax_t _BV(unsigned bitNo) {
     return uintmax_t(1) << bitNo;
   }
