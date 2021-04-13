@@ -18,5 +18,5 @@
 #pragma once
 
 #if defined(__cpp_constexpr) 
-	#define MAYBE_CONSTEXPR constexpr
+	#define BGA__MAYBE_CONSTEXPR constexpr
 #endif

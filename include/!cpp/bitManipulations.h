@@ -206,7 +206,7 @@ void cycleDec(IntArg& vArg, const IntArg& maxVArg) {
 
 
 template<uintmax_t x> struct IntToMaskHelperClass {
-  #define GEN_SHIFT(aArg, bArg, shiftArg) static const uintmax_t CONCAT(x, bArg) = CONCAT(x, aArg) | (CONCAT(x, aArg) >> ((((shiftArg) / 4) <= sizeof(uintmax_t)) ? (shiftArg) : 0));
+  #define GEN_SHIFT(aArg, bArg, shiftArg) static const uintmax_t BGA__CONCAT(x, bArg) = BGA__CONCAT(x, aArg) | (BGA__CONCAT(x, aArg) >> ((((shiftArg) / 4) <= sizeof(uintmax_t)) ? (shiftArg) : 0));
 
   static const uintmax_t x1 = x;
 

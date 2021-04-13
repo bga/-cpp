@@ -29,38 +29,38 @@
 
 
 //# [https://stackoverflow.com/a/3782064]
-#define IS_EMPTY_MACRO__NO_OTHER_MACRO_STARTS_WITH_THIS_NAME_
-#define IS_EMPTY_MACRO_IMPL(nameArg) defined(IS_EMPTY_MACRO__NO_OTHER_MACRO_STARTS_WITH_THIS_NAME_ ## nameArg)
-#define IS_EMPTY_MACRO(nameArg) IS_EMPTY_MACRO_IMPL(nameArg)
+#define BGA__IS_EMPTY_MACRO__NO_OTHER_MACRO_STARTS_WITH_THIS_NAME_
+#define BGA__IS_EMPTY_MACRO_IMPL(nameArg) defined(BGA__IS_EMPTY_MACRO__NO_OTHER_MACRO_STARTS_WITH_THIS_NAME_ ## nameArg)
+#define BGA__IS_EMPTY_MACRO(nameArg) BGA__IS_EMPTY_MACRO_IMPL(nameArg)
 
 #if 0
-  template<class ValueArg, TEMPLATE__ENABLE_IF(boost::is_arithmetic<ValueArg>::value)>
+  template<class ValueArg, BGA__TEMPLATE__ENABLE_IF(boost::is_arithmetic<ValueArg>::value)>
   ValueArg abs(ValueArg x) {
-    return (0 <= x) ? x : -x; 
+    return (0 <= x) ? x : -x;
   }
 #endif
-#define TEMPLATE__ENABLE_IF(condExprArg) typename boost::enable_if<(condExprArg), int>::type = 0
+#define BGA__TEMPLATE__ENABLE_IF(condExprArg) typename boost::enable_if<(condExprArg), int>::type = 0
 
 
-#ifndef MAYBE_CONSTEXPR
-  #define MAYBE_CONSTEXPR
+#ifndef BGA__MAYBE_CONSTEXPR
+  #define BGA__MAYBE_CONSTEXPR
 #endif
 
-#define STR(x) _STR(x)
-#define _STR(x) #x
+#define BGA__STR(x) BGA__STR_IMPL(x)
+#define BGA__STR_IMPL(x) #x
 
-#define CONCAT(a, b) _CONCAT(a, b)
-#define _CONCAT(a, b) a ## b
+#define BGA__CONCAT(a, b) BGA__CONCAT_IMPL(a, b)
+#define BGA__CONCAT_IMPL(a, b) a ## b
 
-#define PRAGMA(xArg) _Pragma(STR(xArg))
+#define BGA__PRAGMA(xArg) _Pragma(BGA__STR(xArg))
 
 #ifdef __COUNTER__
-  #define UNIQUE_ID __COUNTER__
+  #define BGA__UNIQUE_ID __COUNTER__
 #else
-  #define UNIQUE_ID __LINE__
+  #define BGA__UNIQUE_ID __LINE__
 #endif
 
-#define UNIQUE_NAME CONCAT(dummy, UNIQUE_ID)
+#define BGA__UNIQUE_NAME BGA__CONCAT(dummy, BGA__UNIQUE_ID)
 
 //#define override
 
@@ -104,34 +104,35 @@ typedef int UInt;
 typedef void Void;
 typedef bool Bool;
 
-#define GEN_STATIC_ASSERT_XX_HELPER(nameArg, exprArg) \
+#define BGA__GEN_STATIC_ASSERT_XX_HELPER(nameArg, exprArg) \
 	template<intmax_t a, intmax_t b> struct nameArg { \
 		struct _ {  }; \
 		typedef typename std::conditional<(exprArg), int, _>::type type; \
 	};
-#define STATIC_ASSERT_XX(nameArg, aArg, bArg) \
-	struct UNIQUE_NAME { typename nameArg<(aArg), (bArg)>::type x() { return 1; } };
+#define BGA__STATIC_ASSERT_XX(nameArg, aArg, bArg) \
+	struct BGA__UNIQUE_NAME { typename nameArg<(aArg), (bArg)>::type dummy() { return 1; } };
 
-GEN_STATIC_ASSERT_XX_HELPER(static_assert_lt_helper, a < b)
-#define static_assert_lt(aArg, bArg) STATIC_ASSERT_XX(static_assert_lt_helper, (aArg), (bArg))
+BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_lt_helper, a < b)
+#define static_assert_lt(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_lt_helper, (aArg), (bArg))
 
-GEN_STATIC_ASSERT_XX_HELPER(static_assert_lte_helper, a <= b)
-#define static_assert_lte(aArg, bArg) STATIC_ASSERT_XX(static_assert_lte_helper, (aArg), (bArg))
+BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_lte_helper, a <= b)
+#define static_assert_lte(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_lte_helper, (aArg), (bArg))
 
-GEN_STATIC_ASSERT_XX_HELPER(static_assert_gt_helper, b < a)
-#define static_assert_gt(aArg, bArg) STATIC_ASSERT_XX(static_assert_gt_helper, (aArg), (bArg))
+BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_gt_helper, b < a)
+#define static_assert_gt(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_gt_helper, (aArg), (bArg))
 
-GEN_STATIC_ASSERT_XX_HELPER(static_assert_gte_helper, b <= a)
-#define static_assert_gte(aArg, bArg) STATIC_ASSERT_XX(static_assert_gte_helper, (aArg), (bArg))
+BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_gte_helper, b <= a)
+#define static_assert_gte(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_gte_helper, (aArg), (bArg))
 
-GEN_STATIC_ASSERT_XX_HELPER(static_assert_eq_helper, a == b)
-#define static_assert_eq(aArg, bArg) STATIC_ASSERT_XX(static_assert_eq_helper, (aArg), (bArg))
+BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_eq_helper, a == b)
+#define static_assert_eq(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_eq_helper, (aArg), (bArg))
 
-GEN_STATIC_ASSERT_XX_HELPER(static_assert_neq_helper, a != b)
-#define static_assert_neq(aArg, bArg) STATIC_ASSERT_XX(static_assert_neq_helper, (aArg), (bArg))
+BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_neq_helper, a != b)
+#define static_assert_neq(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_neq_helper, (aArg), (bArg))
 
-GEN_STATIC_ASSERT_XX_HELPER(static_assert_hasBit_helper, a & (1 << b))
-#define static_assert_hasBit(aArg, bArg) STATIC_ASSERT_XX(static_assert_hasBit, (aArg), (bArg))
+BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_hasBit_helper, a & (1 << b))
+#define static_assert_hasBit(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_hasBit, (aArg), (bArg))
+
 
 template<typename TArg> TArg Math_abs(const TArg& x) {
 	return (x < 0) ? -x : x;
@@ -160,7 +161,7 @@ Int randomInt(Int a,  Int b) {
 typedef ptrdiff_t Size;
 
 template<class Type, Size n>
-MAYBE_CONSTEXPR Size arraySize( Type (&)[n] ) {
+BGA__MAYBE_CONSTEXPR Size arraySize( Type (&)[n] ) {
   return n;
 }
 
@@ -180,10 +181,10 @@ run {
   std::cout << "run" << std::endl;
 }
 #endif
-#define run _RUN_ID(UNIQUE_ID)
+#define run BGA__RUN_ID(BGA__UNIQUE_ID)
 
-#define _RUN_ID(idArg) _RUN(CONCAT(Run, idArg), CONCAT(runMethod, idArg), CONCAT(runInstance, idArg))
-#define _RUN(_classNameArg, _methodNameArg, _instanceNameArg) \
+#define BGA__RUN_ID(idArg) BGA__RUN(BGA__CONCAT(Run, idArg), BGA__CONCAT(runMethod, idArg), BGA__CONCAT(runInstance, idArg))
+#define BGA__RUN(_classNameArg, _methodNameArg, _instanceNameArg) \
 void _methodNameArg(); \
 class _classNameArg { \
   public: \
@@ -198,10 +199,10 @@ void _methodNameArg()
 #if 0
   static_print(F_CPU / (1 << adcPrescaler))
 #endif
-/* PRAGMA(message(__FILE__ ":" STR(__LINE__) " " STR(exprArg) " =")) */ \
-#ifdef ENABLE_STATIC_PRINT
+/* BGA__PRAGMA(message(__FILE__ ":" BGA__STR(__LINE__) " " BGA__STR(exprArg) " =")) */ \
+#ifdef BGA__ENABLE_STATIC_PRINT
   #define static_print(constExpr) \
-    char (*CONCAT(__inspectInt_, __LINE__))[constExpr] = 1;
+    char (*BGA__CONCAT(__inspectInt_, __LINE__))[constExpr] = 1;
 #else
   #define static_print(constExpr)
 #endif
