@@ -110,7 +110,7 @@ typedef bool Bool;
 		typedef typename std::conditional<(exprArg), int, _>::type type; \
 	};
 #define BGA__STATIC_ASSERT_XX(nameArg, aArg, bArg) \
-	struct BGA__UNIQUE_NAME { typename nameArg<(aArg), (bArg)>::type dummy() { return 1; } };
+	struct BGA__UNIQUE_NAME { typename nameArg<(aArg), (bArg)>::type dummy() { return 1; } }
 
 BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_lt_helper, a < b)
 #define static_assert_lt(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_lt_helper, (aArg), (bArg))
