@@ -47,6 +47,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <type_traits>
 
 #include <!cpp/TestRunner.h>
 namespace Math { namespace Fp {  
@@ -58,6 +59,11 @@ namespace Log2fix { namespace details {
 	#ifdef UINT64_MAX
 		template<> struct DoublePrec<uint32_t> { typedef uint64_t Ret; };
 	#endif
+
+	template<class TArg> struct ToSigned;
+	template<> struct ToSigned<uint8_t> { typedef int8_t Ret; };
+	template<> struct ToSigned<uint16_t> { typedef int16_t Ret; };
+	template<> struct ToSigned<uint32_t> { typedef int32_t Ret; };
 	
 	template<class TArg> struct Consts;
 	template<> struct Consts<uint8_t> { enum { INV_LOG2_E_Q0DOT_N = UINT8_C(177), INV_LOG2_10_Q0DOT_N =  UINT8_C(77) }; };
@@ -68,12 +74,12 @@ namespace Log2fix { namespace details {
 } }
 
 template<class TArg>
-TArg log2fix(TArg x, size_t precision) {
+typename Log2fix::details::ToSigned<TArg>::Ret /* (max - precision).precision */ log2fix(TArg x, size_t precision) {
 	// This implementation is based on Clay. S. Turner's fast binary logarithm
 	// algorithm[1].
 	
 	TArg b = TArg(1) << (precision - 1);
-	TArg y = 0;
+	typename Log2fix::details::ToSigned<TArg>::Ret y = 0;
 	
 	// static_assert(0 < precision && precision < sizeof(TArg) * 8 - 1);
 	
