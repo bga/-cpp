@@ -24,13 +24,13 @@
 #endif
 #if !IS_EMPTY_MACRO(MAYBE_CONSTEXPR)
   constexpr inline uintmax_t _BV(unsigned bitNo) {
-    return 1 << bitNo;
+    return uintmax_t(1) << bitNo;
   }
 #else
-  #define _BV(bitNoArg) (1 << (bitNoArg))
+  #define _BV(bitNoArg) (uintmax_t(1) << (bitNoArg))
 #endif
 
-#define bitsCountToMask(bitsCountArg) ((1 << (bitsCountArg)) - 1)
+#define bitsCountToMask(bitsCountArg) ((uintmax_t(1) << (bitsCountArg)) - 1)
 #define hasBit(vArg, bitNumberArg) (((vArg) & _BV((bitNumberArg))))
 #define hasBitMask(vArg, bitNumberArg) (((vArg) & (bitNumberArg)))
 
