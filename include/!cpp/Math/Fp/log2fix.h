@@ -87,7 +87,7 @@ typename Log2fix::details::ToSigned<TArg>::Ret /* (max - precision).precision */
 	// static_assert(0 < precision && precision < sizeof(TArg) * 8 - 1);
 	
 	if(x == 0) {
-		return TArg(-1); // represents negative infinity
+		return -1; // represents negative infinity
 	}
 	
 	while(x < TArg(1) << precision) {
