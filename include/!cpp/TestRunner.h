@@ -26,14 +26,14 @@ example("x") {
 };
 #endif
 
-#ifdef TESTRUNNER_ON
+#ifdef BGA__TESTRUNNER_ON
 
 #include <iostream>
 #include <string>
 #include <unordered_map>
 
-#ifndef TESTRUNNER_OUTPUT_STREAM
-  #define TESTRUNNER_OUTPUT_STREAM std::cerr
+#ifndef BGA__TESTRUNNER_OUTPUT_STREAM
+  #define BGA__TESTRUNNER_OUTPUT_STREAM std::cerr
 #endif  
 
 template<typename AArg, typename BArg> 
@@ -42,7 +42,7 @@ void _assert_not_eq(const char* fileName, int lineNo, const AArg& a, const BArg&
   
   }
   else {
-    TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED: " << a << " != " << b << std::endl;
+    BGA__TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED: " << a << " != " << b << std::endl;
   }
 }
 #define assert_not_eq(aArg, bArg) _assert_not_eq(__FILE__, __LINE__, (aArg), (bArg))
@@ -53,7 +53,7 @@ void _assert_eq(const char* fileName, int lineNo, const AArg& a, const BArg& b) 
   
   }
   else {
-    TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED: " << a << " == " << b << std::endl;
+    BGA__TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED: " << a << " == " << b << std::endl;
   }
 }
 #define assert_eq(aArg, bArg) _assert_eq(__FILE__, __LINE__, (aArg), (bArg))
@@ -70,7 +70,7 @@ namespace TestRunnerNS {
     //for(const auto& [testName, testPtr] : TestRunnerNS::testNameToTestPtr) {
     for(auto i = TestRunnerNS::testNameToTestPtr.begin(); i != TestRunnerNS::testNameToTestPtr.end(); ++i) { const auto& testName = (*i).first; const auto& testPtr = (*i).second; 
       if(std::string(testName).substr(0, prefix.size()) == prefix) {
-        TESTRUNNER_OUTPUT_STREAM << "Running test '" << testName << "'" << std::endl;
+        BGA__TESTRUNNER_OUTPUT_STREAM << "Running test '" << testName << "'" << std::endl;
         testPtr->runTest();
       }
       else {
@@ -102,8 +102,8 @@ void TestRunner_userTestRun2() {
 }
 #endif
 
-#define _TESTRUNNER_EXAMPLE_ID(ID, testNameArg) _TESTRUNNER_EXAMPLE(CONCAT(UserTest, ID), CONCAT(TestRunner_userTestRun, ID), CONCAT(_test, ID), testNameArg) 
-#define _TESTRUNNER_EXAMPLE(_classNameArg, _methodNameArg, _instanceNameArg, testNameArg) \
+#define BGA__TESTRUNNER_EXAMPLE_ID_IMPL(ID, testNameArg) BGA__TESTRUNNER_EXAMPLE_IMPL(BGA__CONCAT(UserTest, ID), BGA__CONCAT(TestRunner_userTestRun, ID), BGA__CONCAT(_test, ID), testNameArg) 
+#define BGA__TESTRUNNER_EXAMPLE_IMPL(_classNameArg, _methodNameArg, _instanceNameArg, testNameArg) \
 void _methodNameArg(); \
 namespace TestRunnerNS { class _classNameArg: Test { \
   public:\
@@ -115,12 +115,12 @@ namespace TestRunnerNS { class _classNameArg: Test { \
 void _methodNameArg() 
 
 #ifdef __COUNTER__
-  #define example(testNameArg) _TESTRUNNER_EXAMPLE_ID(__COUNTER__, testNameArg)
+  #define example(testNameArg) BGA__TESTRUNNER_EXAMPLE_ID_IMPL(__COUNTER__, testNameArg)
 #else  
-  #define example(testNameArg) _TESTRUNNER_EXAMPLE_ID(__LINE__, testNameArg)
+  #define example(testNameArg) BGA__TESTRUNNER_EXAMPLE_ID_IMPL(__LINE__, testNameArg)
 #endif
 
-#else // no { TESTRUNNER_ON }. Zero API
+#else // no { BGA__TESTRUNNER_ON }. Zero API
 
 template<typename AArg, typename BArg> 
 void assert_not_eq(const AArg& a, const BArg& b) {
@@ -129,14 +129,14 @@ template<typename AArg, typename BArg>
 void assert_eq(const AArg& a, const BArg& b) {
 }
 
-#define _TESTRUNNER_EXAMPLE_ID(ID, testNameArg) _TESTRUNNER_EXAMPLE(CONCAT(UserTest, ID), CONCAT(TestRunner_userTestRun, ID), CONCAT(_test, ID), testNameArg) 
-#define _TESTRUNNER_EXAMPLE(_classNameArg, _methodNameArg, _instanceNameArg, testNameArg) \
+#define BGA__TESTRUNNER_EXAMPLE_ID_IMPL(ID, testNameArg) BGA__TESTRUNNER_EXAMPLE_IMPL(BGA__CONCAT(UserTest, ID), BGA__CONCAT(TestRunner_userTestRun, ID), BGA__CONCAT(_test, ID), testNameArg) 
+#define BGA__TESTRUNNER_EXAMPLE_IMPL(_classNameArg, _methodNameArg, _instanceNameArg, testNameArg) \
 inline void _methodNameArg() 
 
 #ifdef __COUNTER__
-  #define example(testNameArg) _TESTRUNNER_EXAMPLE_ID(__COUNTER__, testNameArg)
+  #define example(testNameArg) BGA__TESTRUNNER_EXAMPLE_ID_IMPL(__COUNTER__, testNameArg)
 #else  
-  #define example(testNameArg) _TESTRUNNER_EXAMPLE_ID(__LINE__, testNameArg)
+  #define example(testNameArg) BGA__TESTRUNNER_EXAMPLE_ID_IMPL(__LINE__, testNameArg)
 #endif
  
-#endif // TESTRUNNER_ON
+#endif // BGA__TESTRUNNER_ON
