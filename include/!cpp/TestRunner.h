@@ -114,11 +114,7 @@ namespace TestRunnerNS { class _classNameArg: Test { \
 } _instanceNameArg; }\
 void _methodNameArg() 
 
-#ifdef __COUNTER__
-  #define example(testNameArg) BGA__TESTRUNNER_EXAMPLE_ID_IMPL(__COUNTER__, testNameArg)
-#else  
-  #define example(testNameArg) BGA__TESTRUNNER_EXAMPLE_ID_IMPL(__LINE__, testNameArg)
-#endif
+#define example(testNameArg) BGA__TESTRUNNER_EXAMPLE_ID_IMPL(BGA__UNIQUE_ID, testNameArg)
 
 #else // no { BGA__TESTRUNNER_ON }. Zero API
 
@@ -133,10 +129,6 @@ void assert_eq(const AArg& a, const BArg& b) {
 #define BGA__TESTRUNNER_EXAMPLE_IMPL(_classNameArg, _methodNameArg, _instanceNameArg, testNameArg) \
 inline void _methodNameArg() 
 
-#ifdef __COUNTER__
-  #define example(testNameArg) BGA__TESTRUNNER_EXAMPLE_ID_IMPL(__COUNTER__, testNameArg)
-#else  
-  #define example(testNameArg) BGA__TESTRUNNER_EXAMPLE_ID_IMPL(__LINE__, testNameArg)
-#endif
+#define example(testNameArg) BGA__TESTRUNNER_EXAMPLE_ID_IMPL(BGA__UNIQUE_ID, testNameArg)
  
 #endif // BGA__TESTRUNNER_ON
