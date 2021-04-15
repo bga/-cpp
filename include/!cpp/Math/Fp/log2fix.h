@@ -144,5 +144,7 @@ example("log2fix") {
 	
 	assert_eq(logfix(uint8_t(0x62), 8 - 5), 0x13);
 	assert_eq(logfix(uint16_t(0x6200), 16 - 5), 0x140A);
-	assert_eq(logfix(uint32_t(0x62000000), 32 - 5), 0x140B512E);
+	#ifdef UINT64_MAX
+		assert_eq(logfix(uint32_t(0x62000000), 32 - 5), 0x140B512E);
+	#endif
 }
