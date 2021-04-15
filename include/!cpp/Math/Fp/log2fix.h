@@ -55,9 +55,12 @@ namespace Math { namespace Fp {
 namespace Log2fix { namespace details {
 	template<class TArg> struct DoublePrec;
 	template<> struct DoublePrec<uint8_t> { typedef uint16_t Ret; };
+	template<> struct DoublePrec<int8_t> { typedef int16_t Ret; };
 	template<> struct DoublePrec<uint16_t> { typedef uint32_t Ret; };
+	template<> struct DoublePrec<int16_t> { typedef int32_t Ret; };
 	#ifdef UINT64_MAX
 		template<> struct DoublePrec<uint32_t> { typedef uint64_t Ret; };
+		template<> struct DoublePrec<int32_t> { typedef int64_t Ret; };
 	#endif
 
 	template<class TArg> struct ToSigned;
@@ -112,20 +115,24 @@ typename Log2fix::details::ToSigned<TArg>::Ret /* (max - precision).precision */
 }
 
 template<class TArg>
-TArg logfix(TArg x, size_t precision) {
-	typedef typename Log2fix::details::DoublePrec<TArg>::Ret T2Arg; 
-	T2Arg t = T2Arg(log2fix(x, precision)) * Log2fix::details::Consts<TArg>::INV_LOG2_E_Q0DOT_N;
+typename Log2fix::details::ToSigned<TArg>::Ret logfix(TArg x, size_t precision) {
+	typedef typename Log2fix::details::ToSigned<TArg>::Ret STArg; 
+	typedef typename Log2fix::details::DoublePrec<STArg>::Ret ST2Arg; 
+	ST2Arg t = ST2Arg(log2fix(x, precision)) * Log2fix::details::Consts<TArg>::INV_LOG2_E_Q0DOT_N;
 	
 	return t >> (sizeof(TArg) * 8);
 }
 
+#if 0
 template<class TArg>
-TArg log10fix(TArg x, size_t precision) {
-	typedef typename Log2fix::details::DoublePrec<TArg>::Ret T2Arg; 
-	T2Arg t = T2Arg(log2fix(x, precision)) * Log2fix::details::Consts<TArg>::INV_LOG2_10_Q0DOT_N;
+typename Log2fix::details::ToSigned<TArg>::Ret log10fix(TArg x, size_t precision) {
+	typedef typename Log2fix::details::ToSigned<TArg>::Ret STArg; 
+	typedef typename Log2fix::details::DoublePrec<STArg>::Ret ST2Arg; 
+	ST2Arg t = ST2Arg(log2fix(x, precision)) * Log2fix::details::Consts<TArg>::INV_LOG2_10_Q0DOT_N;
 	
 	return t >> (sizeof(TArg) * 8);
 }
+#endif
 
 // [1] C. S. Turner,  "A Fast Binary Logarithm Algorithm", IEEE Signal
 //     Processing Mag., pp. 124,140, Sep. 2010.
