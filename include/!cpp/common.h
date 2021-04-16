@@ -99,7 +99,7 @@ typedef uint_fast32_t FU32;
 
 typedef int Z;
 typedef int Int;
-typedef int UInt;
+typedef unsigned int UInt;
 
 typedef void Void;
 typedef bool Bool;
