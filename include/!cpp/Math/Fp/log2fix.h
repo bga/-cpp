@@ -108,7 +108,7 @@ typename Log2fix::details::ToSigned<TArg>::Ret /* (max - precision).precision */
 	
 	for(size_t i = 0; i < precision; i++) {
 		z = z * z >> precision;
-		if(z >= (TArg(2) << precision)) {
+		if(z >= (T2Arg(2) << precision)) {
 			z >>= 1;
 			y += b;
 		}
