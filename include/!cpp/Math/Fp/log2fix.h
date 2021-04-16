@@ -81,8 +81,12 @@ typename Log2fix::details::ToSigned<TArg>::Ret /* (max - precision).precision */
 	// This implementation is based on Clay. S. Turner's fast binary logarithm
 	// algorithm[1].
 	
+	typedef typename Log2fix::details::ToSigned<TArg>::Ret STArg; 
+	typedef typename Log2fix::details::DoublePrec<TArg>::Ret T2Arg; 
+	typedef typename Log2fix::details::DoublePrec<STArg>::Ret ST2Arg; 
+
 	TArg b = TArg(1) << (precision - 1);
-	typename Log2fix::details::ToSigned<TArg>::Ret y = 0;
+	STArg y = 0;
 	
 	// static_assert(0 < precision && precision < sizeof(TArg) * 8 - 1);
 	
@@ -100,7 +104,7 @@ typename Log2fix::details::ToSigned<TArg>::Ret /* (max - precision).precision */
 		y += TArg(1) << precision;
 	}
 	
-	typename Log2fix::details::DoublePrec<TArg>::Ret z = x;
+	T2Arg z = x;
 	
 	for(size_t i = 0; i < precision; i++) {
 		z = z * z >> precision;
