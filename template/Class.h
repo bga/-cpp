@@ -47,8 +47,8 @@ template<typename ConfigArg> struct Self {
 };
 #pragma pop_macro("Self")
 
-#ifdef TESTRUNNER_ON
-example(STRING(Self)) {
+#ifdef BGA__TESTRUNNER_ON
+example(BGA__STR(Self)) {
 	struct Config {
 		typedef U32 SomeType;
 
