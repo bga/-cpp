@@ -14,7 +14,7 @@
 	limitations under the License.
 */
 
-#pargma once
+#pragma once
 
 #include <!cpp/common.h>
 #include <!cpp/TestRunner.h>
