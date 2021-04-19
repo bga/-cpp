@@ -52,6 +52,11 @@
 #define BGA__CONCAT(a, b) BGA__CONCAT_IMPL(a, b)
 #define BGA__CONCAT_IMPL(a, b) a ## b
 
+#define BGA__CONCAT3(a, b, c) BGA__CONCAT(BGA__CONCAT(a, b), c)
+#define BGA__CONCAT4(a, b, c, d) BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(a, b), c), d)
+#define BGA__CONCAT5(a, b, c, d, e) BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(a, b), c), d), e)
+#define BGA__CONCAT6(a, b, c, d, e, f) BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(a, b), c), d), e), f)
+
 #define BGA__PRAGMA(xArg) _Pragma(BGA__STR(xArg))
 
 #ifdef __COUNTER__
