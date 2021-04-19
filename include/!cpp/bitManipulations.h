@@ -171,7 +171,7 @@ inline uint32_t changeByteEndian(uint32_t x) {
 
 #define isPowerOf2(vArg) (((vArg) & ((vArg) - 1)) == 0)
 template<typename IntArg, typename MaxIntArg>
-IntArg cycleInc(IntArg& vArg, const MaxIntArg& maxVArg) {
+inline IntArg cycleInc(IntArg& vArg, const MaxIntArg& maxVArg) {
   if(isPowerOf2(maxVArg)) {
     vArg += 1;
     vArg &= maxVArg - 1;
@@ -189,7 +189,7 @@ IntArg cycleInc(IntArg& vArg, const MaxIntArg& maxVArg) {
 }
 
 template<typename IntArg>
-void cycleDec(IntArg& vArg, const IntArg& maxVArg) {
+inline void cycleDec(IntArg& vArg, const IntArg& maxVArg) {
   if(isPowerOf2(maxVArg)) {
     vArg -= 1;
     vArg &= maxVArg - 1;
