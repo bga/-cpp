@@ -45,6 +45,16 @@ namespace details {
 		
 		return x;
 	}
+	#ifdef UINT64_MAX
+	template<> 
+	inline U64 XorShift_mix<U64>(U64 x) {
+		x ^= x << 13;
+		x ^= x >> 7;
+		x ^= x << 17;
+		
+		return x;
+	}
+	#endif
 } //# namespace
 
 
