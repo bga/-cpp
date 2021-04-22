@@ -29,6 +29,14 @@ namespace details {
 	template<class ResultUIntArg> 
 	ResultUIntArg XorShift_mix(ResultUIntArg x);
 	
+	//# [http://www.retroprogramming.com/2017/07/xorshift-pseudorandom-numbers-in-z80.html]
+	template<> 
+	inline U16 XorShift_mix<U16>(U16 x) {
+		x ^= x << 7;
+		x ^= x >> 9;
+		x ^= x << 8;
+		return x;
+	}
 	template<> 
 	inline U32 XorShift_mix<U32>(U32 x) {
 		x ^= x << 13;
