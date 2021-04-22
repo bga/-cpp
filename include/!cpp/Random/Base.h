@@ -23,8 +23,11 @@ namespace Random {
 #pragma push_macro("Self")
 #undef Self
 #define Self Base
+template<class ResultUIntArg> 
 struct Self {
-	U32 generate(const U8& bitsCount);
+	typedef ResultUIntArg ResultUInt;
+	
+	ResultUIntArg generate(const FU8& bitsCount);
 };
 #pragma pop_macro("Self")
 

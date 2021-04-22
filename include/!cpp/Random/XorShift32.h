@@ -21,20 +21,39 @@
 namespace Random {
 #pragma push_macro("Self")
 #undef Self
-#define Self XorShift32
-struct Self: Random::Base {
-	U32 mState;
-	Self() {
-		mState = 1;
-	}
-	U32 generate(const U8 bitsCount) {
-		/* Algorithm "xor" from p. 4 of Marsaglia, "Xorshift RNGs" */
-		U32 x = mState;
+#define Self XorShift
+
+namespace details {
+	/* Algorithm "xor" from p. 4 of Marsaglia, "Xorshift RNGs" */
+	//# mix it using xorShift
+	template<class ResultUIntArg> 
+	ResultUIntArg XorShift_mix(ResultUIntArg x);
+	
+	template<> 
+	inline U32 XorShift_mix<U32>(U32 x) {
 		x ^= x << 13;
 		x ^= x >> 17;
 		x ^= x << 5;
-		mState = x;
-		return x >> (32 - bitsCount);
+		
+		return x;
+	}
+} //# namespace
+
+
+template<class ResultUIntArg> 
+struct Self: Base<ResultUIntArg> {
+	typedef ResultUIntArg ResultUInt;
+	
+	ResultUInt mState;
+	
+	Self() {
+		mState = 1;
+	}
+	
+	inline ResultUInt generate(const FU8& bitsCount) {
+		mState = details::XorShift_mix(mState);
+		
+		return mState >> (sizeof(ResultUInt) * 8 - bitsCount);
 	}
 };
 #pragma pop_macro("Self")
