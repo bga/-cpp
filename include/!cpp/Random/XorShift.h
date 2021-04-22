@@ -68,6 +68,9 @@ struct Self: Base<ResultUIntArg> {
 		mState = 1;
 	}
 	
+	inline void seed(ResultUInt seed) {
+		mState = seed;
+	}
 	inline ResultUInt generate(const FU8& bitsCount) {
 		mState = details::XorShift_mix(mState);
 		
