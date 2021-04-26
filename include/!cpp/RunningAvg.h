@@ -21,8 +21,14 @@
 #include <!cpp/newKeywords.h> 
 #include <!cpp/common.h> 
 
+#pragma push_macro("Self")
+#undef Self
 #define Self RunningAvg
+
+#pragma push_macro("p")
+#undef p
 #define p (*this)
+
 template<class ArrayType, class SumTypeArg>
 class Self;
 
@@ -87,5 +93,5 @@ class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
   }
 };
 
-#undef p
-#undef Self
+#pragma pop_macro("p")
+#pragma pop_macro("Self")
