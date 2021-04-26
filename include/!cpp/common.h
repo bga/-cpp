@@ -190,14 +190,14 @@ template<typename T> void swap(T &a, T &b) {
 
 #if 0
 int x;
-run {
-  std::cout << "run" << std::endl;
+BGA__RUN {
+  std::cout << "BGA__RUN" << std::endl;
 }
 #endif
-#define run BGA__RUN_ID(BGA__UNIQUE_ID)
+#define BGA__RUN BGA__RUN_ID_IMPL(BGA__UNIQUE_ID)
 
-#define BGA__RUN_ID(idArg) BGA__RUN(BGA__CONCAT(Run, idArg), BGA__CONCAT(runMethod, idArg), BGA__CONCAT(runInstance, idArg))
-#define BGA__RUN(_classNameArg, _methodNameArg, _instanceNameArg) \
+#define BGA__RUN_ID_IMPL(idArg) BGA__RUN_IMPL(BGA__CONCAT(Run, idArg), BGA__CONCAT(runMethod, idArg), BGA__CONCAT(runInstance, idArg))
+#define BGA__RUN_IMPL(_classNameArg, _methodNameArg, _instanceNameArg) \
 void _methodNameArg(); \
 class _classNameArg { \
   public: \
