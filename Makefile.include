@@ -93,4 +93,4 @@ list:
 
 # debugging make
 print-%:
-	@echo $* = $($*)
+	@echo "$*" = "$($*)"
