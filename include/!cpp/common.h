@@ -157,7 +157,7 @@ template<typename AArg, typename BArg> AArg Math_max(const AArg& a, const BArg& 
 	return (a < b) ? b : a;
 }
 template<typename AArg, typename XArg, typename BArg> XArg Math_clamp(const AArg& a, const XArg& x, const BArg& b) {
-	return max(min(x, a), b);
+	return Math_max(Math_min(x, a), b);
 }
 template<typename TArg, typename AArg, typename BArg> TArg Math_lerp(const TArg& t, const AArg& a, const BArg& b) {
 	return t * (b - a) + a;
