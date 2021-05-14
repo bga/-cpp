@@ -148,19 +148,24 @@ BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_test_helper, !!b)
 
 
 template<typename TArg> TArg Math_abs(const TArg& x) {
-	return (x < 0) ? -x : x;
+  #define BGA__MATH__ABS(x) (((x) < 0) ? -(x) : (x))
+  return BGA__MATH__ABS(x);
 }
 template<typename AArg, typename BArg> AArg Math_min(const AArg& a, const BArg& b) {
-	return (a < b) ? a : b;
+  #define BGA__MATH__MIN(a, b) (((a) < (b)) ? (a) : (b))
+  return BGA__MATH__MIN(a, b);
 }
 template<typename AArg, typename BArg> AArg Math_max(const AArg& a, const BArg& b) {
-	return (a < b) ? b : a;
+  #define BGA__MATH__MAX(a, b) (((a) < (b)) ? (b) : (a))
+  return BGA__MATH__MAX(a, b);
 }
 template<typename AArg, typename XArg, typename BArg> XArg Math_clamp(const AArg& a, const XArg& x, const BArg& b) {
-	return Math_max(Math_min(x, a), b);
+  #define BGA__MATH__CLAMP(a, x, b) BGA__MATH__MIN(BGA__MATH__MAX(x, a), b)
+  return Math_min(Math_max(x, a), b);
 }
 template<typename TArg, typename AArg, typename BArg> TArg Math_lerp(const TArg& t, const AArg& a, const BArg& b) {
-	return t * (b - a) + a;
+  #define BGA__MATH__LERP(t, a, b) ((t) * ((b) - (a)) + (a))
+  return BGA__MATH__LERP(t, a, b);
 }
 
 
