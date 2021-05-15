@@ -1,5 +1,9 @@
 #pragma once
 
+#if !defined(__IAR_SYSTEMS_ICC__ )
+	#include <type_traits>
+#else
+
 #include <stdint.h>
 
 namespace std {
@@ -50,3 +54,4 @@ template<class TArg, class FArg> struct conditional<false, TArg, FArg> {
 };
 	
 } //# namespace std
+#endif
