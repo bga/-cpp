@@ -28,9 +28,9 @@ example("x") {
 
 #ifdef BGA__TESTRUNNER_ON
 
-#include <iostream>
-#include <string>
-#include <unordered_map>
+#include <!cpp/wrapper/iostream>
+#include <!cpp/wrapper/string>
+#include <!cpp/wrapper/unordered_map>
 
 #ifndef BGA__TESTRUNNER_OUTPUT_STREAM
   #define BGA__TESTRUNNER_OUTPUT_STREAM std::cerr

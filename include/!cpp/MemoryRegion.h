@@ -17,7 +17,7 @@
 #pragma once
 
 #include <!cpp/common.h>
-#include <stdlib.h>
+#include <!cpp/wrapper/cstdlib>
 
 struct MemoryRegion {
 	size_t dataSize;

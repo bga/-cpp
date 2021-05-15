@@ -16,7 +16,7 @@
 
 
 #pragma once
-#include <stdint.h>
+#include <!cpp/wrapper/cstdint>
 #include <!cpp/common.h>
 
 #ifdef _BV

@@ -29,8 +29,8 @@
     #define _DEBUG_LIKE_PRINTF 
   #endif
   
-  #include <stdio.h>
-  #include <stdarg.h>
+  #include <!cpp/wrapper/cstdio>
+  #include <!cpp/wrapper/cstdarg>
   void Debug_vPrintRaw(const char *s, va_list args) {
     FILE *f = (Debug_logUrl == 0) ? stderr : fopen(Debug_logUrl, "a");
     vfprintf(f, s, args);
@@ -51,7 +51,7 @@
 #define Debug_print(format, args...) Debug_printRaw("[%s:%i] " format "%c", __FILE__, __LINE__, ##args, 0x0A)
 
 #ifndef NDEBUG
-  #include <assert.h>
+  #include <!cpp/wrapper/cassert>
   #define doAndAssert assert
 #else
   #define assert _DEBUG_DONT_EXEC

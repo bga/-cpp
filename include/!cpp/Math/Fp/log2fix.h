@@ -45,9 +45,9 @@
 
 #pragma once
 
-#include <stdint.h>
-#include <stddef.h>
-#include <type_traits>
+#include <!cpp/wrapper/cstdint>
+#include <!cpp/wrapper/cstddef>
+#include <!cpp/wrapper/type_traits>
 
 #include <!cpp/TestRunner.h>
 namespace Math { namespace Fp {  

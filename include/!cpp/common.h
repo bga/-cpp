@@ -15,9 +15,9 @@
 */
 
 #pragma once
-#include <stdint.h>
-#include <stddef.h>
-#include <type_traits>
+#include <!cpp/wrapper/cstdint>
+#include <!cpp/wrapper/cstddef>
+#include <!cpp/wrapper/type_traits>
 
 #if defined(__IAR_SYSTEMS_ICC__ )
   #include "common.iar.before.h"
@@ -170,7 +170,7 @@ template<typename TArg, typename AArg, typename BArg> TArg Math_lerp(const TArg&
 
 
 #if 0
-#include <cstdlib>
+#include <!cpp/wrapper/cstdlib>
 Int randomInt(Int a,  Int b) {
   return a + rand() % (b - a + 1);
 }

@@ -4,7 +4,7 @@
 	#include <type_traits>
 #else
 
-#include <stdint.h>
+#include <!cpp/wrapper/cstdint>
 
 namespace std {
 struct true_type {

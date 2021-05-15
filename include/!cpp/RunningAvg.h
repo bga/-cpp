@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include <stddef.h>
+#include <!cpp/wrapper/cstddef>
 #include <!cpp/bitManipulations.h>
 #include <!cpp/newKeywords.h> 
 #include <!cpp/common.h> 
