@@ -105,12 +105,14 @@ typedef uint_fast32_t FU32;
 typedef int Z;
 typedef int Int;
 typedef unsigned int UInt;
+typedef intmax_t IntMax;
+typedef uintmax_t UIntMax;
 
 typedef void Void;
 typedef bool Bool;
 
 #define BGA__GEN_STATIC_ASSERT_XX_HELPER(nameArg, exprArg) \
-	template<intmax_t a, intmax_t b> struct nameArg { \
+	template<IntMax a, IntMax b> struct nameArg { \
 		struct _ {  }; \
 		typedef typename std::conditional<(exprArg), int, _>::type type; \
 	};
@@ -135,7 +137,7 @@ BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_eq_helper, a == b)
 BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_neq_helper, a != b)
 #define static_assert_neq(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_neq_helper, (aArg), (bArg))
 
-BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_hasBit_helper, a & (uintmax_t(1) << b))
+BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_hasBit_helper, a & (UIntMax(1) << b))
 #define static_assert_hasBit(aArg, bArg) BGA__STATIC_ASSERT_XX(static_assert_hasBit_helper, (aArg), (bArg))
 
 #if 0
@@ -144,7 +146,7 @@ BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_hasBit_helper, a & (uintmax_t(1) 
   static_assert_test(3, x == 1 || x == 2); //# FAIL
 #endif
 BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_test_helper, !!b)
-#define static_assert_test(aArg, testAExprArg) struct BGA__UNIQUE_NAME { static const intmax_t x = (aArg); BGA__STATIC_ASSERT_XX(static_assert_test_helper, x, (testAExprArg)); }
+#define static_assert_test(aArg, testAExprArg) struct BGA__UNIQUE_NAME { static const IntMax x = (aArg); BGA__STATIC_ASSERT_XX(static_assert_test_helper, x, (testAExprArg)); }
 
 
 template<typename TArg> TArg Math_abs(const TArg& x) {

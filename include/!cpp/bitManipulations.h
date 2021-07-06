@@ -23,14 +23,14 @@
   #undef _BV
 #endif
 #if !BGA__IS_EMPTY_MACRO(BGA__MAYBE_CONSTEXPR)
-  constexpr inline uintmax_t _BV(unsigned bitNo) {
-    return uintmax_t(1) << bitNo;
+  constexpr inline UIntMax _BV(unsigned bitNo) {
+    return UIntMax(1) << bitNo;
   }
 #else
-  #define _BV(bitNoArg) (uintmax_t(1) << (bitNoArg))
+  #define _BV(bitNoArg) (UIntMax(1) << (bitNoArg))
 #endif
 
-#define bitsCountToMask(bitsCountArg) ((uintmax_t(1) << (bitsCountArg)) - 1)
+#define bitsCountToMask(bitsCountArg) ((UIntMax(1) << (bitsCountArg)) - 1)
 #define hasBit(vArg, bitNumberArg) (((vArg) & _BV((bitNumberArg))))
 #define hasBitMask(vArg, bitNumberArg) (((vArg) & (bitNumberArg)))
 
@@ -205,10 +205,10 @@ inline void cycleDec(IntArg& vArg, const IntArg& maxVArg) {
 }
 
 
-template<uintmax_t x> struct IntToMaskHelperClass {
-  #define GEN_SHIFT(aArg, bArg, shiftArg) static const uintmax_t BGA__CONCAT(x, bArg) = BGA__CONCAT(x, aArg) | (BGA__CONCAT(x, aArg) >> ((((shiftArg) / 4) <= sizeof(uintmax_t)) ? (shiftArg) : 0));
+template<UIntMax x> struct IntToMaskHelperClass {
+  #define GEN_SHIFT(aArg, bArg, shiftArg) static const UIntMax BGA__CONCAT(x, bArg) = BGA__CONCAT(x, aArg) | (BGA__CONCAT(x, aArg) >> ((((shiftArg) / 4) <= sizeof(UIntMax)) ? (shiftArg) : 0));
 
-  static const uintmax_t x1 = x;
+  static const UIntMax x1 = x;
 
   GEN_SHIFT(1, 2, 32)
   GEN_SHIFT(2, 3, 16)
@@ -219,7 +219,7 @@ template<uintmax_t x> struct IntToMaskHelperClass {
 
   #undef GEN_SHIFT
 
-  static const uintmax_t result = x7;
+  static const UIntMax result = x7;
 };
 
 #define intToMaskConstExpr(xArg) IntToMaskHelperClass<(xArg)>::result
