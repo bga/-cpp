@@ -41,7 +41,7 @@ inline TArg clearBit(TArg& vArg, unsigned bitNumberArg) {
 }
 template<class TArg, class T2Arg>
 inline TArg clearBitMask(TArg& vArg, T2Arg maskArg) {
-  vArg &= maskArg;
+  vArg &= ~maskArg;
   return vArg;
 }
 
