@@ -1,0 +1,157 @@
+/*
+  Copyright 2020 Bga <bga.email@gmail.com>
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+#if 201703L <= __cplusplus
+	#include <optional>
+#else
+
+namespace std {
+
+#pragma push_macro("Self")
+#undef Self
+#define Self optional
+
+struct nullopt_t {
+
+} nullopt;
+
+template<class TArg> struct Self {
+	typedef TArg value_type;
+
+	private:
+	bool m_hasValue;
+	value_type m_value;
+
+	public:
+	Self(): m_hasValue(false) {
+
+	}
+	Self(const nullopt_t& v): m_hasValue(false) {
+
+	}
+	Self(const value_type& v): m_hasValue(true), m_value(v) {
+
+	}
+	inline bool has_value() const {
+		return this->m_hasValue;
+	}
+
+	inline operator bool() const {
+		return this->has_value();
+	}
+	inline value_type value_or(const value_type& defaultV) const {
+		return (this->has_value()) ? this->m_value : defaultV;
+	}
+	inline value_type value_or(const nullopt_t& x) const {
+		return *this;
+	}
+	inline Self value_or(const Self& x) const {
+		return (this->has_value()) ? *this : x;
+	}
+	inline value_type value() const {
+		return this->m_value;
+	}
+
+	inline void reset() {
+		this->m_hasValue = false;
+	}
+	inline void emplace(const value_type& v) {
+		this->m_value = v;
+		this->m_hasValue = true;
+	}
+
+	inline Self& operator= (const value_type& v) {
+		this->m_value = v;
+		this->m_hasValue = true;
+
+		return *this;
+	}
+	inline Self& operator= (const nullopt_t& x) {
+		this->reset();
+
+		return *this;
+	}
+	inline Self& operator= (const Self& x) {
+		this->m_value = x.m_value;
+		this->m_hasValue = x.m_hasValue;
+
+		return *this;
+	}
+
+	inline bool operator== (const value_type& v) const {
+		return this->has_value() && this->m_value == v;
+	}
+	inline bool operator== (const nullopt_t& x) const {
+		return this->has_value();
+	}
+	inline bool operator== (const Self& x) const {
+		return this->m_value == x.m_value && this->m_hasValue == x.m_hasValue;
+	}
+
+	inline bool operator!= (const value_type& v) const {
+		return !(*this == v);
+	}
+	inline value_type operator!= (const nullopt_t& x) const {
+		return !(*this == x);
+	}
+	inline value_type operator!= (const Self& x) const {
+		return !(*this == x);
+	}
+
+	inline value_type operator* () {
+		return this->m_value;
+	}
+	inline value_type operator* () const {
+		return this->m_value;
+	}
+	inline value_type* operator ->() const {
+		return &(this->m_value);
+	}
+	#if 0
+	operator value_type() const {
+		return this->m_value;
+	}
+	#endif
+};
+
+template<class TArg> inline Self<TArg> make_optional(const TArg& v) {
+	return Self<TArg>(v);
+}
+
+
+template<class TArg>
+inline bool operator== (const nullopt_t& y, const Self<TArg>& x) {
+	return x == y;
+}
+template<class TArg>
+inline bool operator== (const TArg& v, const Self<TArg>& x) {
+	return x == v;
+}
+
+template<class TArg>
+inline bool operator!= (const nullopt_t& y, const Self<TArg>& x) {
+	return x != y;
+}
+template<class TArg>
+inline bool operator!= (const TArg& v, const Self<TArg>& x) {
+	return x != v;
+}
+
+#pragma pop_macro("Self")
+
+} //# namespace
+
+#endif
