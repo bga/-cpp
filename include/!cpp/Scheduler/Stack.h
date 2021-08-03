@@ -40,6 +40,9 @@ struct Self {
 	Index tasks_end;
 	Index tasks_size;
 
+	Bool isEmpty() const {
+		return this->tasks_end == 0;
+	}
 	Bool isFull() const {
 		return this->tasks_end == this->tasks_size;
 	}
