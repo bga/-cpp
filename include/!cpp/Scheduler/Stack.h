@@ -40,10 +40,15 @@ struct Self {
 	Index tasks_end;
 	Index tasks_size;
 
+	Bool isFull() const {
+		return this->tasks_end == this->tasks_size;
+	}
+
 	void push(Task task) {
 		if(tasks_end < this->tasks_size) {
 			this->tasks[this->tasks_end++] = task;
 		};
+
 	}
 
 	void dispatch(CallArg callArg) {
