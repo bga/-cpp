@@ -108,8 +108,13 @@ template<class ArrayTypeArg, class IndexArg>
 struct BGA__CONCAT(Self, _Dynamic): public details::Self::Api<details::Self::DynamicStorage<ArrayTypeArg, IndexArg> > {
 	typedef details::Self::Api<details::Self::DynamicStorage<ArrayTypeArg, IndexArg> > Base;
 
+	void from(ArrayTypeArg* data_, Size sizeArg) {
+		this->data = data_;
+		this->size = sizeArg;
+	}
+
   template<Size sizeArg>
-	BGA__CONCAT(Self, _Dynamic)(const ArrayTypeArg data_[sizeArg]): Base() {
+	void from(ArrayTypeArg data_[sizeArg]) {
 		this->data = data_;
 		this->size = sizeArg;
 	}
