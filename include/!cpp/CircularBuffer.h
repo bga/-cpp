@@ -87,6 +87,18 @@ namespace details { namespace Self {
 			}
 		}
 
+		Bool initAndPrefill(ArrayType v) {
+			if(this->isInited()) {
+				return false;
+			}
+			else {
+				this->init();
+				this->prefill(v);
+
+				return true;
+			}
+		}
+
 		inline Bool cycleIndex() {
 			//# avr-gcc bug
 			Size size2 = this->size;
