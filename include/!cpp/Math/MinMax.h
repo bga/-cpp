@@ -17,6 +17,8 @@
 #pragma once
 
 #include <!cpp/common.h>
+#include <!cpp/newKeywords.h>
+
 // #include <!cpp/TestRunner.h>
 
 namespace Math {
@@ -27,10 +29,10 @@ namespace Math {
 template<class IntTypeArg>
 struct Self {
 	typedef IntTypeArg IntType;
-	
+
 	IntTypeArg min;
 	IntTypeArg max;
-	
+
 	Bool isValid() const {
 		return this->min <= this->max;
 	}
@@ -43,6 +45,15 @@ struct Self {
 		};
 		return *this;
 	}
+
+	static inline Self fromArray(const Self* vs, Size size) {
+		Self x = vs[0];
+		forInc(Size, i, 1, size) {
+			x.merge(vs[i]);
+		}
+		return x;
+	}
+
 };
 #pragma pop_macro("Self")
 

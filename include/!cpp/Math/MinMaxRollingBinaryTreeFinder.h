@@ -76,15 +76,7 @@ struct Self {
 	}
 
 	inline MinMaxD fromArray(const MinMaxD* vs, size_t size) {
-		// MinMaxD x = vs[size - 1];
-		// forDec(SubIndex, i, 0, size - 1) {
-			// x.merge(vs[i]);
-		// }
-		MinMaxD x = vs[0];
-		forInc(SubIndex, i, 1, size) {
-			x.merge(vs[i]);
-		}
-		return x;
+		return MinMaxD::fromArray(vs, size);
 	}
 
 	void prefill(DataValue valueToAdd) {
