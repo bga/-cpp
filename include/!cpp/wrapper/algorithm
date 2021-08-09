@@ -1,0 +1,55 @@
+/*
+	Copyright 2020 Bga <bga.email@gmail.com>
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+	*/
+
+#pragma once
+
+#include <algorithm>
+#include <!cpp/wrapper/cstring>
+
+namespace std {
+
+#if __cplusplus < 201703L
+
+template<typename ForwardIteratorArg, typename ValueArg>
+inline void fill(ForwardIteratorArg first, ForwardIteratorArg last, const ValueArg& value) {
+	for (; first != last; ++first) {
+		*first = value;
+	}
+}
+template<>
+inline void fill<char*, char>(char* first, char* last, const char& value) {
+	memset(first, last - first, value);
+}
+
+template<typename ForwardIteratorArg, typename SizeArg, typename ValueArg>
+inline
+typename enable_if<is_unsigned<SizeArg>::value, void>::type
+fill_n(ForwardIteratorArg first, SizeArg n, const ValueArg& value) {
+	for (; 0 != n; n -= 1) {
+		*first = value;
+	}
+}
+template<typename SizeArg>
+inline
+typename enable_if<is_unsigned<SizeArg>::value, void>::type
+// fill_n<char*, SizeArg, char>(char* first, SizeArg n, const char& value) {
+fill_n(char* first, SizeArg n, const char& value) {
+	memset(first, n, value);
+}
+
+#endif //# __cplusplus < 201703L
+
+} //# namespace
