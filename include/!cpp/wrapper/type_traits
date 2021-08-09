@@ -40,6 +40,40 @@ template<> struct is_integral<bool> : public true_type{};
 	template<> struct is_integral<int64_t> : public true_type{};
 #endif
 
+template <class T> struct is_signed : public false_type {};
+template <class T> struct is_signed<const T> : public is_signed<T> {};
+template <class T> struct is_signed<volatile const T> : public is_signed<T>{};
+template <class T> struct is_signed<volatile T> : public is_signed<T>{};
+
+//* is a type T an [cv-qualified-] integral type described in the standard (3.9.1p3)
+// as an extension we include long long, as this is likely to be added to the
+// standard at a later date
+template<> struct is_signed<char> : public true_type {};
+template<> struct is_signed<short> : public true_type{};
+template<> struct is_signed<int> : public true_type{};
+template<> struct is_signed<long> : public true_type{};
+
+#ifdef UINT64_MAX
+	template<> struct is_signed<int64_t> : public true_type{};
+#endif
+
+template <class T> struct is_unsigned : public false_type {};
+template <class T> struct is_unsigned<const T> : public is_unsigned<T> {};
+template <class T> struct is_unsigned<volatile const T> : public is_unsigned<T>{};
+template <class T> struct is_unsigned<volatile T> : public is_unsigned<T>{};
+
+//* is a type T an [cv-qualified-] integral type described in the standard (3.9.1p3)
+// as an extension we include long long, as this is likely to be added to the
+// standard at a later date
+template<> struct is_unsigned<unsigned char> : public true_type {};
+template<> struct is_unsigned<unsigned short> : public true_type{};
+template<> struct is_unsigned<unsigned int> : public true_type{};
+template<> struct is_unsigned<unsigned long> : public true_type{};
+
+#ifdef UINT64_MAX
+	template<> struct is_unsigned<uint64_t> : public true_type{};
+#endif
+
 template<bool isEnableArg, class TArg> struct enable_if;
 template<class TArg> struct enable_if<true, TArg> {
 	typedef TArg type;
@@ -52,6 +86,6 @@ template<class TArg, class FArg> struct conditional<true, TArg, FArg> {
 template<class TArg, class FArg> struct conditional<false, TArg, FArg> {
 	typedef FArg type;
 };
-	
+
 } //# namespace std
 #endif
