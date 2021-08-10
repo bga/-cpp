@@ -15,6 +15,9 @@
 */
 
 #pragma once
+
+#include <!cpp/common_macro.h>
+
 #include <!cpp/wrapper/cstdint>
 #include <!cpp/wrapper/cstddef>
 #include <!cpp/wrapper/type_traits>
@@ -28,44 +31,6 @@
 #endif
 
 
-//# [https://stackoverflow.com/a/3782064]
-#define BGA__IS_EMPTY_MACRO__NO_OTHER_MACRO_STARTS_WITH_THIS_NAME_
-#define BGA__IS_EMPTY_MACRO_IMPL(nameArg) defined(BGA__IS_EMPTY_MACRO__NO_OTHER_MACRO_STARTS_WITH_THIS_NAME_ ## nameArg)
-#define BGA__IS_EMPTY_MACRO(nameArg) BGA__IS_EMPTY_MACRO_IMPL(nameArg)
-
-#if 0
-  template<class ValueArg, BGA__TEMPLATE__ENABLE_IF(boost::is_arithmetic<ValueArg>::value)>
-  ValueArg abs(ValueArg x) {
-    return (0 <= x) ? x : -x;
-  }
-#endif
-#define BGA__TEMPLATE__ENABLE_IF(condExprArg) typename boost::enable_if<(condExprArg), int>::type = 0
-
-
-#ifndef BGA__MAYBE_CONSTEXPR
-  #define BGA__MAYBE_CONSTEXPR
-#endif
-
-#define BGA__STR(x) BGA__STR_IMPL(x)
-#define BGA__STR_IMPL(x) #x
-
-#define BGA__CONCAT(a, b) BGA__CONCAT_IMPL(a, b)
-#define BGA__CONCAT_IMPL(a, b) a ## b
-
-#define BGA__CONCAT3(a, b, c) BGA__CONCAT(BGA__CONCAT(a, b), c)
-#define BGA__CONCAT4(a, b, c, d) BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(a, b), c), d)
-#define BGA__CONCAT5(a, b, c, d, e) BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(a, b), c), d), e)
-#define BGA__CONCAT6(a, b, c, d, e, f) BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(a, b), c), d), e), f)
-
-#define BGA__PRAGMA(xArg) _Pragma(BGA__STR(xArg))
-
-#ifdef __COUNTER__
-  #define BGA__UNIQUE_ID __COUNTER__
-#else
-  #define BGA__UNIQUE_ID __LINE__
-#endif
-
-#define BGA__UNIQUE_NAME BGA__CONCAT(dummy, BGA__UNIQUE_ID)
 
 //#define override
 
