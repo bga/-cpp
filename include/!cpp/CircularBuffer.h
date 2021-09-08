@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <!cpp/wrapper/algorithm>
 #include <!cpp/bitManipulations.h>
 #include <!cpp/newKeywords.h>
 #include <!cpp/common.h>
@@ -82,9 +83,7 @@ namespace details { namespace Self {
 		}
 
 		void prefill(ArrayType v) {
-			forInc(Index, i, 0, this->size) {
-				this->data[i] = v;
-			}
+			std::fill_n(this->data, Size(this->size), v);
 		}
 
 		Bool initAndPrefill(ArrayType v) {
