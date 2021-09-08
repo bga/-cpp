@@ -91,5 +91,39 @@ template<> struct is_unsigned<unsigned long> : public true_type{};
 	template<> struct is_unsigned<uint64_t> : public true_type{};
 #endif
 
+template <class T> struct make_unsigned {};
+template <class T> struct make_unsigned<const T> { typedef typename make_unsigned<T>::type const type; };
+template <class T> struct make_unsigned<volatile const T> { typedef typename make_unsigned<T>::type volatile const type; };
+template <class T> struct make_unsigned<volatile T> { typedef typename make_unsigned<T>::type volatile type; };
+
+//* is a type T an [cv-qualified-] integral type described in the standard (3.9.1p3)
+// as an extension we include long long, as this is likely to be added to the
+// standard at a later date
+template<> struct make_unsigned<signed char> { typedef unsigned char type; };
+template<> struct make_unsigned<short> { typedef unsigned short type; };
+template<> struct make_unsigned<int> { typedef unsigned int type; };
+template<> struct make_unsigned<long> { typedef unsigned long type; };
+
+#ifdef UINT64_MAX
+	template<> struct make_unsigned<int64_t> { typedef uint64_t; };
+#endif
+
+template <class T> struct make_signed {};
+template <class T> struct make_signed<const T> { typedef typename make_signed<T>::type const type; };
+template <class T> struct make_signed<volatile const T> { typedef typename make_signed<T>::type volatile const type; };
+template <class T> struct make_signed<volatile T> { typedef typename make_signed<T>::type volatile type; };
+
+//* is a type T an [cv-qualified-] integral type described in the standard (3.9.1p3)
+// as an extension we include long long, as this is likely to be added to the
+// standard at a later date
+template<> struct make_signed<unsigned char> { typedef signed char type; };
+template<> struct make_signed<unsigned short> { typedef signed short type; };
+template<> struct make_signed<unsigned int> { typedef signed int type; };
+template<> struct make_signed<unsigned long> { typedef signed long type; };
+
+#ifdef UINT64_MAX
+	template<> struct make_signed<uint64_t> { typedef int64_t; };
+#endif
+
 } //# namespace std
 #endif
