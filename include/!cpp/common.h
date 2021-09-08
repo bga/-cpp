@@ -143,7 +143,8 @@ Int randomInt(Int a,  Int b) {
 }
 #endif
 
-typedef ptrdiff_t Size;
+typedef ptrdiff_t SSize;
+typedef typename ::std::make_unsigned<SSize>::type Size;
 
 template<class Type, Size n>
 BGA__MAYBE_CONSTEXPR Size arraySize( Type (&)[n] ) {
