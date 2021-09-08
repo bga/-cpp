@@ -47,7 +47,7 @@ namespace details { namespace Self {
 		typedef IndexArg Index;
 
 		// private:
-		enum { size = sizeArg };
+		static const Size size = sizeArg;
 		ArrayType data[size];
 	};
 
