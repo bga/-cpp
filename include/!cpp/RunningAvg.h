@@ -17,6 +17,7 @@
 #pragma once
 
 #include <!cpp/wrapper/cstddef>
+#include <!cpp/wrapper/algorithm>
 #include <!cpp/bitManipulations.h>
 #include <!cpp/newKeywords.h> 
 #include <!cpp/common.h> 
@@ -72,9 +73,7 @@ class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
   
   void add(ArrayType v) {
     if(p.index == U8(~0)) {
-      forInc(int, i, 0, size) {
-        p.data[i] = v;
-      }
+      std::fill_n(p.data, size, v);
       p.sum = v * size;
       p.index = 0;
     }
