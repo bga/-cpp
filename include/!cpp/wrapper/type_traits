@@ -14,6 +14,20 @@ struct false_type {
 	enum { value = false };
 };
 
+template<bool isEnableArg, class TArg> struct enable_if;
+template<class TArg> struct enable_if<true, TArg> {
+	typedef TArg type;
+};
+
+template<bool isEnableArg, class TArg, class FArg> struct conditional;
+template<class TArg, class FArg> struct conditional<true, TArg, FArg> {
+	typedef TArg type;
+};
+template<class TArg, class FArg> struct conditional<false, TArg, FArg> {
+	typedef FArg type;
+};
+
+
 template <class T> struct is_integral : public false_type {};
 template <class T> struct is_integral<const T> : public is_integral<T> {};
 template <class T> struct is_integral<volatile const T> : public is_integral<T>{};
@@ -73,19 +87,6 @@ template<> struct is_unsigned<unsigned long> : public true_type{};
 #ifdef UINT64_MAX
 	template<> struct is_unsigned<uint64_t> : public true_type{};
 #endif
-
-template<bool isEnableArg, class TArg> struct enable_if;
-template<class TArg> struct enable_if<true, TArg> {
-	typedef TArg type;
-};
-
-template<bool isEnableArg, class TArg, class FArg> struct conditional;
-template<class TArg, class FArg> struct conditional<true, TArg, FArg> {
-	typedef TArg type;
-};
-template<class TArg, class FArg> struct conditional<false, TArg, FArg> {
-	typedef FArg type;
-};
 
 } //# namespace std
 #endif
