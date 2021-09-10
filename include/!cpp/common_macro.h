@@ -27,7 +27,7 @@
     return (0 <= x) ? x : -x;
   }
 #endif
-#define BGA__TEMPLATE__ENABLE_IF(condExprArg) typename boost::enable_if<(condExprArg), int>::type = 0
+#define BGA__TEMPLATE__ENABLE_IF(condExprArg) typename ::std::enable_if<(condExprArg), int>::type = 0
 
 
 #ifndef BGA__MAYBE_CONSTEXPR
