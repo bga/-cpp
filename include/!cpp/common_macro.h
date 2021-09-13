@@ -54,3 +54,9 @@
 #endif
 
 #define BGA__UNIQUE_NAME BGA__CONCAT(dummy, BGA__UNIQUE_ID)
+
+#define BGA__DEFINE_CV_TEMPLATE_SPECIALIZATION(structArg, typeArg) \
+  template <class T> structArg typeArg<const T> { typedef typename typeArg<T>::type const type; }; \
+  template <class T> structArg typeArg<volatile const T> { typedef typename typeArg<T>::type volatile const type; }; \
+  template <class T> structArg typeArg<volatile T> { typedef typename typeArg<T>::type volatile type; };
+
