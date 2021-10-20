@@ -33,7 +33,7 @@ example("x") {
 #include <!cpp/wrapper/unordered_map>
 
 #ifndef BGA__TESTRUNNER_OUTPUT_STREAM
-  #define BGA__TESTRUNNER_OUTPUT_STREAM std::cerr
+  #define BGA__TESTRUNNER_OUTPUT_STREAM ::std::cerr
 #endif  
 
 template<typename AArg, typename BArg> 
@@ -42,7 +42,7 @@ void _assert_not_eq(const char* fileName, int lineNo, const AArg& a, const BArg&
   
   }
   else {
-    BGA__TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED: " << a << " != " << b << std::endl;
+    BGA__TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED: " << a << " != " << b << ::std::endl;
   }
 }
 #define assert_not_eq(aArg, bArg) _assert_not_eq(__FILE__, __LINE__, (aArg), (bArg))
@@ -53,7 +53,7 @@ void _assert_eq(const char* fileName, int lineNo, const AArg& a, const BArg& b) 
   
   }
   else {
-    BGA__TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED: " << a << " == " << b << std::endl;
+    BGA__TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED: " << a << " == " << b << ::std::endl;
   }
 }
 #define assert_eq(aArg, bArg) _assert_eq(__FILE__, __LINE__, (aArg), (bArg))
@@ -64,13 +64,13 @@ namespace TestRunnerNS {
     virtual void runTest() = 0;
   };
   
-  std::unordered_map<const char * /* testName */, Test *> testNameToTestPtr;
+  ::std::unordered_map<const char * /* testName */, Test *> testNameToTestPtr;
 
-  void runTests(std::string prefix) {
+  void runTests(::std::string prefix) {
     //for(const auto& [testName, testPtr] : TestRunnerNS::testNameToTestPtr) {
     for(auto i = TestRunnerNS::testNameToTestPtr.begin(); i != TestRunnerNS::testNameToTestPtr.end(); ++i) { const auto& testName = (*i).first; const auto& testPtr = (*i).second; 
-      if(std::string(testName).substr(0, prefix.size()) == prefix) {
-        BGA__TESTRUNNER_OUTPUT_STREAM << "Running test '" << testName << "'" << std::endl;
+      if(::std::string(testName).substr(0, prefix.size()) == prefix) {
+        BGA__TESTRUNNER_OUTPUT_STREAM << "Running test '" << testName << "'" << ::std::endl;
         testPtr->runTest();
       }
       else {
@@ -81,7 +81,7 @@ namespace TestRunnerNS {
 }
 
 extern "C" int testRunnerMain(int argc, const char* argv[]) {
-  std::string prefix = (2 <= argc) ? argv[1] : "";
+  ::std::string prefix = (2 <= argc) ? argv[1] : "";
   
   TestRunnerNS::runTests(prefix);
   // TODO return actual test success result 
