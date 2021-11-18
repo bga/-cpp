@@ -184,7 +184,7 @@ void _methodNameArg()
 /* BGA__PRAGMA(message(__FILE__ ":" BGA__STR(__LINE__) " " BGA__STR(exprArg) " =")) */ \
 #ifdef BGA__ENABLE_STATIC_PRINT
   #define static_print(constExpr) \
-    char (*BGA__CONCAT(__inspectInt_, __LINE__))[constExpr] = 1;
+    char (*BGA__CONCAT(__inspectInt_, BGA__UNIQUE_ID))[constExpr] = 1;
 #else
   #define static_print(constExpr)
 #endif
