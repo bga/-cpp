@@ -135,6 +135,12 @@ template<typename TArg, typename AArg, typename BArg> TArg Math_lerp(const TArg&
   return BGA__MATH__LERP(t, a, b);
 }
 
+namespace details {
+template<int nArg, unsigned powArg> struct Pow { static const IntMax value = nArg * Pow<nArg, powArg - 1>::value; };
+template<int nArg> struct Pow<nArg, 0> { static const IntMax value = 1; };
+} //# namespace
+#define BGA__MATH__POW_INT(nArg, powArg) details::Pow<(nArg), (powArg)>::value 
+
 
 #if 0
 #include <!cpp/wrapper/cstdlib>
