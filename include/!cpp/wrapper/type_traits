@@ -30,100 +30,65 @@ template<class TArg, class FArg> struct conditional<false, TArg, FArg> {
 	typedef FArg type;
 };
 
+template<class TArg, class RArg = void> struct enable_if_has_type {
+	typedef RArg type;
+};
 
-template <class T> struct is_integral : public false_type {};
-template <class T> struct is_integral<const T> : public is_integral<T> {};
-template <class T> struct is_integral<volatile const T> : public is_integral<T>{};
-template <class T> struct is_integral<volatile T> : public is_integral<T>{};
+template <class T> struct remove_const { typedef T type; };
+template <class T> struct remove_const<const T> { typedef T type; };
 
-//* is a type T an [cv-qualified-] integral type described in the standard (3.9.1p3)
-// as an extension we include long long, as this is likely to be added to the
-// standard at a later date
-template<> struct is_integral<unsigned char> : public true_type {};
-template<> struct is_integral<unsigned short> : public true_type{};
-template<> struct is_integral<unsigned int> : public true_type{};
-template<> struct is_integral<unsigned long> : public true_type{};
+template <class T> struct remove_volatile { typedef T type; };
+template <class T> struct remove_volatile<volatile T> { typedef T type; };
 
-template<> struct is_integral<signed char> : public true_type{};
-template<> struct is_integral<short> : public true_type{};
-template<> struct is_integral<int> : public true_type{};
-template<> struct is_integral<long> : public true_type{};
+template <class T> struct remove_cv { typedef typename remove_const<typename remove_volatile<T>::type>::type type; };
 
-template<> struct is_integral<char> : public true_type{};
-template<> struct is_integral<bool> : public true_type{};
+namespace details {
 
+template <class T> struct intergal_trait;
+template <class T> struct intergal_trait<const T> : public intergal_trait<T> { };
+template <class T> struct intergal_trait<volatile T> : public intergal_trait<T> { };
+template <class T> struct intergal_trait<volatile const T> : public intergal_trait<T> { };
+
+#define BGA__DEF_INTERGAL_TRAIT(typeArg, signedTypeArg, unsignedTypeArg) \
+	template <> struct intergal_trait<typeArg> { \
+		typedef signedTypeArg signed_type;  \
+		typedef unsignedTypeArg unsigned_type; \
+	} \
+;
+
+#define BGA__DEF_INTERGAL_TRAIT2(signedTypeArg, unsignedTypeArg) \
+	BGA__DEF_INTERGAL_TRAIT(signedTypeArg, signedTypeArg, unsignedTypeArg) \
+	BGA__DEF_INTERGAL_TRAIT(unsignedTypeArg, signedTypeArg, unsignedTypeArg) \
+;
+
+
+BGA__DEF_INTERGAL_TRAIT(char, signed char, unsigned char)
+BGA__DEF_INTERGAL_TRAIT2(signed char, unsigned char)
+BGA__DEF_INTERGAL_TRAIT2(signed short, unsigned short)
+BGA__DEF_INTERGAL_TRAIT2(signed int, unsigned int)
+BGA__DEF_INTERGAL_TRAIT2(signed long, unsigned long)
 #ifdef UINT64_MAX
-	template<> struct is_integral<uint64_t> : public true_type{};
-	template<> struct is_integral<int64_t> : public true_type{};
+	BGA__DEF_INTERGAL_TRAIT2(int64_t, uint64_t)
 #endif
 
-template <class T> struct is_signed : public false_type {};
-template <class T> struct is_signed<const T> : public is_signed<T> {};
-template <class T> struct is_signed<volatile const T> : public is_signed<T>{};
-template <class T> struct is_signed<volatile T> : public is_signed<T>{};
+#undef BGA__DEF_INTERGAL_TRAIT2
+#undef BGA__DEF_INTERGAL_TRAIT
 
-//* is a type T an [cv-qualified-] integral type described in the standard (3.9.1p3)
-// as an extension we include long long, as this is likely to be added to the
-// standard at a later date
-template<> struct is_signed<char> : public true_type {};
-template<> struct is_signed<short> : public true_type{};
-template<> struct is_signed<int> : public true_type{};
-template<> struct is_signed<long> : public true_type{};
+} //# namespace
 
-#ifdef UINT64_MAX
-	template<> struct is_signed<int64_t> : public true_type{};
-#endif
+template <class T> struct make_signed { typedef typename details::intergal_trait<T>::signed_type type; };
+template <class T> struct make_unsigned { typedef typename details::intergal_trait<T>::unsigned_type type; };
 
-template <class T> struct is_unsigned : public false_type {};
-template <class T> struct is_unsigned<const T> : public is_unsigned<T> {};
-template <class T> struct is_unsigned<volatile const T> : public is_unsigned<T>{};
-template <class T> struct is_unsigned<volatile T> : public is_unsigned<T>{};
+template <class T, class Enable = void> struct is_integral : public false_type {  };
+template <class T> struct is_integral<T, typename enable_if_has_type<typename details::intergal_trait<T>::unsigned_type >::type> : public true_type {  };
 
-//* is a type T an [cv-qualified-] integral type described in the standard (3.9.1p3)
-// as an extension we include long long, as this is likely to be added to the
-// standard at a later date
-template<> struct is_unsigned<unsigned char> : public true_type {};
-template<> struct is_unsigned<unsigned short> : public true_type{};
-template<> struct is_unsigned<unsigned int> : public true_type{};
-template<> struct is_unsigned<unsigned long> : public true_type{};
+// template <class T, class Enable = void> struct is_signed : public false_type {  };
+template <class T, class Enable = void> struct is_signed;
+template <class T> struct is_signed<T, typename enable_if_has_type<typename details::intergal_trait<T>::unsigned_type >::type> { enum { value = is_same<typename remove_cv<T>::type, typename details::intergal_trait<T>::signed_type>::value }; };
 
-#ifdef UINT64_MAX
-	template<> struct is_unsigned<uint64_t> : public true_type{};
-#endif
-
-template <class T> struct make_unsigned {};
-template <class T> struct make_unsigned<const T> { typedef typename make_unsigned<T>::type const type; };
-template <class T> struct make_unsigned<volatile const T> { typedef typename make_unsigned<T>::type volatile const type; };
-template <class T> struct make_unsigned<volatile T> { typedef typename make_unsigned<T>::type volatile type; };
-
-//* is a type T an [cv-qualified-] integral type described in the standard (3.9.1p3)
-// as an extension we include long long, as this is likely to be added to the
-// standard at a later date
-template<> struct make_unsigned<signed char> { typedef unsigned char type; };
-template<> struct make_unsigned<short> { typedef unsigned short type; };
-template<> struct make_unsigned<int> { typedef unsigned int type; };
-template<> struct make_unsigned<long> { typedef unsigned long type; };
-
-#ifdef UINT64_MAX
-	template<> struct make_unsigned<int64_t> { typedef uint64_t; };
-#endif
-
-template <class T> struct make_signed {};
-template <class T> struct make_signed<const T> { typedef typename make_signed<T>::type const type; };
-template <class T> struct make_signed<volatile const T> { typedef typename make_signed<T>::type volatile const type; };
-template <class T> struct make_signed<volatile T> { typedef typename make_signed<T>::type volatile type; };
-
-//* is a type T an [cv-qualified-] integral type described in the standard (3.9.1p3)
-// as an extension we include long long, as this is likely to be added to the
-// standard at a later date
-template<> struct make_signed<unsigned char> { typedef signed char type; };
-template<> struct make_signed<unsigned short> { typedef signed short type; };
-template<> struct make_signed<unsigned int> { typedef signed int type; };
-template<> struct make_signed<unsigned long> { typedef signed long type; };
-
-#ifdef UINT64_MAX
-	template<> struct make_signed<uint64_t> { typedef int64_t; };
-#endif
+// template <class T, class Enable = void> struct is_unsigned : public false_type {  };
+template <class T, class Enable = void> struct is_unsigned;
+template <class T> struct is_unsigned<T, typename enable_if_has_type<typename details::intergal_trait<T>::unsigned_type >::type> { enum { value = is_same<typename remove_cv<T>::type, typename details::intergal_trait<T>::unsigned_type>::value }; };
 
 } //# namespace std
 #endif
