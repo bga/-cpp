@@ -31,7 +31,7 @@ inline void fill(ForwardIteratorArg first, ForwardIteratorArg last, const ValueA
 }
 template<>
 inline void fill<char*, char>(char* first, char* last, const char& value) {
-	memset(first, last - first, value);
+	memset(first, value, last - first);
 }
 
 template<typename ForwardIteratorArg, typename SizeArg, typename ValueArg>
@@ -47,7 +47,7 @@ inline
 typename enable_if<is_unsigned<SizeArg>::value, void>::type
 // fill_n<char*, SizeArg, char>(char* first, SizeArg n, const char& value) {
 fill_n(char* first, SizeArg n, const char& value) {
-	memset(first, n, value);
+	memset(first, value, n);
 }
 
 #endif //# __cplusplus < 201703L
