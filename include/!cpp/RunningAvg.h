@@ -39,7 +39,7 @@ class Self<ArrayTypeArg[1], SumTypeArg> {
   public:
   typedef ArrayTypeArg ArrayType;
   typedef SumTypeArg SumType;
-  static const size_t size = 1;
+  static const Size size = 1;
   
   private:
   ArrayType value;
@@ -55,12 +55,12 @@ class Self<ArrayTypeArg[1], SumTypeArg> {
 };
 #endif
 
-template<class ArrayTypeArg, size_t sizeArg, class SumTypeArg>
+template<class ArrayTypeArg, Size sizeArg, class SumTypeArg>
 class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
   public:
   typedef ArrayTypeArg ArrayType;
   typedef SumTypeArg SumType;
-  static const size_t size = sizeArg;
+  static const Size size = sizeArg;
   
   private:
   ArrayType data[size];
@@ -82,7 +82,7 @@ class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
       p.sum -= p.data[p.index];
       p.data[p.index] = v;
       //# avr-gcc bug
-      size_t size2 = size;
+      Size size2 = size;
       cycleInc(p.index, size2);
     }
   }

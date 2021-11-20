@@ -77,7 +77,7 @@ namespace Log2fix { namespace details {
 } }
 
 template<class TArg>
-typename Log2fix::details::ToSigned<TArg>::Ret /* (max - precision).precision */ log2fix(TArg x, size_t precision) {
+typename Log2fix::details::ToSigned<TArg>::Ret /* (max - precision).precision */ log2fix(TArg x, Size precision) {
 	// This implementation is based on Clay. S. Turner's fast binary logarithm
 	// algorithm[1].
 	
@@ -106,7 +106,7 @@ typename Log2fix::details::ToSigned<TArg>::Ret /* (max - precision).precision */
 	
 	T2Arg z = x;
 	
-	for(size_t i = 0; i < precision; i++) {
+	for(Size i = 0; i < precision; i++) {
 		z = z * z >> precision;
 		if(z >= (T2Arg(2) << precision)) {
 			z >>= 1;
@@ -119,7 +119,7 @@ typename Log2fix::details::ToSigned<TArg>::Ret /* (max - precision).precision */
 }
 
 template<class TArg>
-typename Log2fix::details::ToSigned<TArg>::Ret logfix(TArg x, size_t precision) {
+typename Log2fix::details::ToSigned<TArg>::Ret logfix(TArg x, Size precision) {
 	typedef typename Log2fix::details::ToSigned<TArg>::Ret STArg; 
 	typedef typename Log2fix::details::DoublePrec<STArg>::Ret ST2Arg; 
 	ST2Arg t = ST2Arg(log2fix(x, precision)) * Log2fix::details::Consts<TArg>::INV_LOG2_E_Q0DOT_N;
@@ -129,7 +129,7 @@ typename Log2fix::details::ToSigned<TArg>::Ret logfix(TArg x, size_t precision) 
 
 #if 0
 template<class TArg>
-typename Log2fix::details::ToSigned<TArg>::Ret log10fix(TArg x, size_t precision) {
+typename Log2fix::details::ToSigned<TArg>::Ret log10fix(TArg x, Size precision) {
 	typedef typename Log2fix::details::ToSigned<TArg>::Ret STArg; 
 	typedef typename Log2fix::details::DoublePrec<STArg>::Ret ST2Arg; 
 	ST2Arg t = ST2Arg(log2fix(x, precision)) * Log2fix::details::Consts<TArg>::INV_LOG2_10_Q0DOT_N;

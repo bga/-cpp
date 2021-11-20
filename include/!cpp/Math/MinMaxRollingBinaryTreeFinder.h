@@ -75,7 +75,7 @@ struct Self {
 		return (this->index & bitMask) == bitMask;
 	}
 
-	inline MinMaxD fromArray(const MinMaxD* vs, size_t size) {
+	inline MinMaxD fromArray(const MinMaxD* vs, Size size) {
 		return MinMaxD::fromArray(vs, size);
 	}
 

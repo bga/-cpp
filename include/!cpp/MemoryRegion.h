@@ -20,6 +20,6 @@
 #include <!cpp/wrapper/cstdlib>
 
 struct MemoryRegion {
-	size_t dataSize;
+	Size dataSize;
 	U8 *data;
 };
