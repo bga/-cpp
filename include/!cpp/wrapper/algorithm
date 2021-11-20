@@ -33,6 +33,14 @@ template<>
 inline void fill<char*, char>(char* first, char* last, const char& value) {
 	memset(first, value, last - first);
 }
+template<>
+inline void fill<signed char*, signed char>(signed char* first, signed char* last, const signed char& value) {
+	memset(first, value, last - first);
+}
+template<>
+inline void fill<unsigned char*, unsigned char>(unsigned char* first, unsigned char* last, const unsigned char& value) {
+	memset(first, value, last - first);
+}
 
 template<typename ForwardIteratorArg, typename SizeArg, typename ValueArg>
 inline
@@ -47,6 +55,20 @@ inline
 typename enable_if<is_unsigned<SizeArg>::value, void>::type
 // fill_n<char*, SizeArg, char>(char* first, SizeArg n, const char& value) {
 fill_n(char* first, SizeArg n, const char& value) {
+	memset(first, value, n);
+}
+template<typename SizeArg>
+inline
+typename enable_if<is_unsigned<SizeArg>::value, void>::type
+// fill_n<signed char*, SizeArg, signed char>(signed char* first, SizeArg n, const signed char& value) {
+fill_n(signed char* first, SizeArg n, const signed char& value) {
+	memset(first, value, n);
+}
+template<typename SizeArg>
+inline
+typename enable_if<is_unsigned<SizeArg>::value, void>::type
+// fill_n<unsigned char*, SizeArg, unsigned char>(unsigned char* first, SizeArg n, const unsigned char& value) {
+fill_n(unsigned char* first, SizeArg n, const unsigned char& value) {
 	memset(first, value, n);
 }
 
