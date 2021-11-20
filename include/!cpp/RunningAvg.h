@@ -65,14 +65,14 @@ class Self<ArrayTypeArg[sizeArg], SumTypeArg> {
   private:
   ArrayType data[size];
   SumType sum; 
-  U8 index;
+  FU8 index;
   
   public:
   
-  Self(): index(U8(~0)) {  }
+  Self(): index(FU8(~0)) {  }
   
   void add(ArrayType v) {
-    if(p.index == U8(~0)) {
+    if(p.index == FU8(~0)) {
       std::fill_n(p.data, size, v);
       p.sum = v * size;
       p.index = 0;
