@@ -48,6 +48,7 @@ typename enable_if<is_unsigned<SizeArg>::value, void>::type
 fill_n(ForwardIteratorArg first, SizeArg n, const ValueArg& value) {
 	for (; 0 != n; n -= 1) {
 		*first = value;
+		++first;
 	}
 }
 template<typename SizeArg>
