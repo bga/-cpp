@@ -121,6 +121,7 @@ struct Self {
 		if(forcePropagate <= level) {
 			for(; level < levelMax - 1; ++level) {
 				matrix[level + 1][(newIndex >> levelValuesSizeLog2) & subIndexMask] = fromArray(matrix[level], arraySize(matrix[level]));
+				newIndex >>= levelValuesSizeLog2;
 			}
 			rootMinMax = fromArray(matrix[levelMax - 1], arraySize(matrix[levelMax - 1]));
 		};
