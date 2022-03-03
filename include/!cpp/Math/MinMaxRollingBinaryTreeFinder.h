@@ -95,36 +95,23 @@ struct Self {
 
 		enum { subIndexMask = bitsCountToMask(levelValuesSizeLog2) };
 
-		Index oldIndex = index;
 		Index newIndex = index + 1;
 		index = newIndex;
 
 		Level level = 0;
-		SubIndex oldSubIndex = oldIndex & subIndexMask;
-		SubIndex newSubIndex = newIndex & subIndexMask;
 
-		matrix[level][newSubIndex].min = matrix[level][newSubIndex].max  = valueToAdd;
+		matrix[level][newIndex & subIndexMask].min = matrix[level][newIndex & subIndexMask].max  = valueToAdd;
 
-		do {
-			if(newSubIndex == 0 && level < levelMax - 1) {
-				//# propagate to nex level
-				matrix[level + 1][(oldIndex >> levelValuesSizeLog2) & subIndexMask] = fromArray(matrix[level], arraySize(matrix[level]));
+		while((newIndex & subIndexMask) == subIndexMask || forcePropagate <= level) {
+			if(levelMax - 1 <= level) {
+				rootMinMax = fromArray(matrix[levelMax - 1], arraySize(matrix[levelMax - 1]));
+				break;
 			};
-
-			oldIndex >>= levelValuesSizeLog2;
+			
+			matrix[level + 1][(newIndex >> levelValuesSizeLog2) & subIndexMask] = fromArray(matrix[level], arraySize(matrix[level]));
 			newIndex >>= levelValuesSizeLog2;
-			oldSubIndex = oldIndex & subIndexMask;
-			newSubIndex = newIndex & subIndexMask;
 			level += 1;
-		} while(oldIndex != newIndex && level < levelMax - 1);
-
-		if(forcePropagate <= level) {
-			for(; level < levelMax - 1; ++level) {
-				matrix[level + 1][(newIndex >> levelValuesSizeLog2) & subIndexMask] = fromArray(matrix[level], arraySize(matrix[level]));
-				newIndex >>= levelValuesSizeLog2;
-			}
-			rootMinMax = fromArray(matrix[levelMax - 1], arraySize(matrix[levelMax - 1]));
-		};
+		}
 
 		return rootMinMax;
 	}
