@@ -18,6 +18,7 @@
 
 #include <!cpp/common.h>
 #include <!cpp/Math/MinMax.h>
+#include <!cpp/bitManipulations.h>
 #include <!cpp/newKeywords.h>
 // #include <!cpp/TestRunner.h>
 
