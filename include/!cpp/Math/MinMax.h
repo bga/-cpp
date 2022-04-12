@@ -45,6 +45,18 @@ struct Self {
 		};
 		return *this;
 	}
+	inline Bool isInBoundLessLess(IntType v) const {
+		return this->min < v && v < this->max;
+	}
+	inline Bool isInBoundLessEq(IntType v) const {
+		return this->min < v && v <= this->max;
+	}
+	inline Bool isInBoundEqLess(IntType v) const {
+		return this->min <= v && v < this->max;
+	}
+	inline Bool isInBoundEqEq(IntType v) const {
+		return this->min <= v && v <= this->max;
+	}
 
 	static inline Self fromArray(const Self* vs, Size size) {
 		Self x = vs[0];
