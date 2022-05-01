@@ -40,6 +40,8 @@
 #endif
 
 
+#include <!cpp/shim/nullptr.h>
+
 #include <!cpp/wrapper/cstdint>
 #include <!cpp/wrapper/cstddef>
 #include <!cpp/wrapper/type_traits>
