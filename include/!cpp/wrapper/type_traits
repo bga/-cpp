@@ -99,5 +99,20 @@ template <class T> struct is_signed<T, typename enable_if_has_type<typename deta
 template <class T, class Enable = void> struct is_unsigned;
 template <class T> struct is_unsigned<T, typename enable_if_has_type<typename details::intergal_trait<T>::unsigned_type >::type> { enum { value = is_same<typename remove_cv<T>::type, typename details::intergal_trait<T>::unsigned_type>::value }; };
 
+#define BGA__DEF_CHAR_IS_XSIGNED_SPEC(structArg, typeArg, specTypeArg) \
+  template <> structArg typeArg<specTypeArg const> : public typeArg<specTypeArg> {  }; \
+  template <> structArg typeArg<specTypeArg volatile> : public typeArg<specTypeArg> {  }; \
+  template <> structArg typeArg<specTypeArg const volatile> : public typeArg<specTypeArg> {  } \
+;
+
+//# because in C++ { char }, { signed char } and { unsigned char } are 3 different types...
+template <> struct is_signed<char> { enum { value = char(-1) == -1 }; };
+BGA__DEF_CHAR_IS_XSIGNED_SPEC(struct, is_signed, char)
+
+template <> struct is_unsigned<char> { enum { value = char(-1) == 255 }; };
+BGA__DEF_CHAR_IS_XSIGNED_SPEC(struct, is_unsigned, char)
+
+#undef BGA__DEF_CHAR_IS_XSIGNED_SPEC
+
 } //# namespace std
 #endif
