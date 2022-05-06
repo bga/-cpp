@@ -91,6 +91,22 @@ typedef uintmax_t UIntMax;
 typedef void Void;
 typedef bool Bool;
 
+//# missed in standard csdtint. Add for unification
+#ifndef UINT8_MIN
+  #define UINT8_MIN UINT8_C(0)
+#endif
+#ifndef UINT16_MIN
+  #define UINT16_MIN UINT16_C(0)
+#endif
+#ifndef UINT32_MIN
+  #define UINT32_MIN UINT32_C(0)
+#endif
+#ifdef UINT64_MAX
+  #ifndef UINT64_MIN
+    #define UINT64_MIN UINT64_C(0)
+  #endif
+#endif
+
 #define BGA__GEN_STATIC_ASSERT_XX_HELPER(nameArg, exprArg) \
 	template<IntMax a, IntMax b> struct nameArg { \
 		struct _ {  }; \
