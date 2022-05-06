@@ -160,6 +160,58 @@ BGA__GEN_INT_TYPE_TRAIT__I_AND_U(32);
 #pragma pop_macro("_MAX")
 #pragma pop_macro("_MIN")
 
+
+template<unsigned bitWidthArg>
+struct make_signed_from_bit_width {
+  typedef typename ::std::conditional<bitWidthArg <= 8, I8, 
+    typename ::std::conditional<bitWidthArg <= 16, I16, 
+      typename ::std::conditional<bitWidthArg <= 32, I32, 
+        typename ::std::conditional<bitWidthArg <= 64, I64_or_void, 
+          void
+        >::type
+      >::type
+    >::type
+  >::type type;
+};
+
+template<unsigned bitWidthArg>
+struct make_unsigned_from_bit_width {
+  typedef typename ::std::make_unsigned<typename make_signed_from_bit_width<bitWidthArg>::type>::type type;
+};
+
+template<class IntArg>
+struct make_signed_half_int_nocv {
+  typedef typename make_signed_from_bit_width<int_type_traits<IntArg>::bit_width / 2>::type type;
+};
+template<class IntArg>
+struct make_unsigned_half_int_nocv {
+  typedef typename ::std::make_unsigned<typename make_signed_half_int_nocv<IntArg>::type>::type type;
+};
+template<class IntArg>
+struct make_signed_double_int_nocv {
+  typedef typename make_signed_from_bit_width<int_type_traits<IntArg>::bit_width * 2>::type type;
+};
+template<class IntArg>
+struct make_unsigned_double_int_nocv {
+  typedef typename ::std::make_unsigned<typename make_signed_double_int_nocv<IntArg>::type>::type type;
+};
+
+template<class IntArg>
+struct make_half_int_nocv {
+  typedef typename ::std::conditional< ::std::is_signed<IntArg>::value, 
+    typename make_signed_half_int_nocv<IntArg>::type, 
+    typename make_unsigned_half_int_nocv<IntArg>::type 
+  >::type type;
+};
+
+template<class IntArg>
+struct make_double_int_nocv {
+  typedef typename ::std::conditional< ::std::is_signed<IntArg>::value, 
+    typename make_signed_double_int_nocv<IntArg>::type, 
+    typename make_unsigned_double_int_nocv<IntArg>::type 
+  >::type type;
+};
+
 } //# namespace
 
 #define BGA__GEN_STATIC_ASSERT_XX_HELPER(nameArg, exprArg) \
