@@ -43,6 +43,11 @@ typedef uint32_t U32;
 #ifdef UINT64_MAX
   typedef int64_t I64;
   typedef uint64_t U64;
+  typedef int64_t I64_or_void;
+  typedef uint64_t U64_or_void;
+#else
+  typedef void I64_or_void;
+  typedef void U64_or_void;
 #endif
 
 typedef int_least8_t LI8;
@@ -54,6 +59,11 @@ typedef uint_least32_t LU32;
 #ifdef UINT64_MAX
   typedef int_least64_t LI64;
   typedef uint_least64_t LU64;
+  typedef int_least64_t LI64_or_void;
+  typedef uint_least64_t LU64_or_void;
+#else
+  typedef void LI64_or_void;
+  typedef void LU64_or_void;
 #endif
 
 typedef int_fast8_t FI8;
@@ -65,6 +75,11 @@ typedef uint_fast32_t FU32;
 #ifdef UINT64_MAX
   typedef int_fast64_t FI64;
   typedef uint_fast64_t FU64;
+  typedef int_fast64_t FI64_or_void;
+  typedef uint_fast64_t FU64_or_void;
+#else
+  typedef void FI64_or_void;
+  typedef void FU64_or_void;
 #endif
 
 typedef int Z;
