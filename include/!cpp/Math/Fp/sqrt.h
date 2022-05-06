@@ -21,12 +21,9 @@
 #include <!cpp/TestRunner.h>
 
 namespace Math { namespace Fp { namespace Sqrt { namespace details { 
-	template<class TArg> struct HalfInt;
-	template<> struct HalfInt<uint16_t> { typedef uint8_t Ret; };
-	template<> struct HalfInt<uint32_t> { typedef uint16_t Ret; };
-	#ifdef UINT64_MAX
-		template<> struct HalfInt<uint64_t> { typedef uint32_t Ret; };
-	#endif
+	template<class TArg> struct HalfInt {
+		typedef typename ::Bga::make_half_int_nocv<TArg>::type Ret;
+	};
 } } } }
 
 namespace Math { namespace Fp {
