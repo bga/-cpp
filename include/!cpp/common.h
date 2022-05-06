@@ -107,6 +107,61 @@ typedef bool Bool;
   #endif
 #endif
 
+namespace Bga {
+
+template<class T> 
+struct int_type_traits;
+
+#ifdef _MIN
+  #pragma push_macro("_MIN")
+  #undef _MIN
+#endif
+
+#ifdef _MAX
+  #pragma push_macro("_MAX")
+  #undef _MAX
+#endif
+
+#define BGA__GEN_INT_TYPE_TRAIT(intPrefixArg, intPrefixUpperArg, numArg) \
+  template<> struct int_type_traits<BGA__CONCAT3(intPrefixArg, numArg, _t)> { \
+    typedef typename ::std::make_signed<BGA__CONCAT3(intPrefixArg, numArg, _t)>::type signed_type; \
+    typedef typename ::std::make_unsigned<BGA__CONCAT3(intPrefixArg, numArg, _t)>::type unsigned_type; \
+    \
+    typedef BGA__CONCAT4(intPrefixArg, _fast, numArg, _t) fast_type; \
+    typedef typename ::std::make_signed<fast_type>::type int_fast_type; \
+    typedef typename ::std::make_unsigned<fast_type>::type uint_fast_type; \
+    \
+    typedef BGA__CONCAT4(intPrefixArg, _least, numArg, _t) least_type; \
+    typedef typename ::std::make_signed<least_type>::type int_least_type; \
+    typedef typename ::std::make_unsigned<least_type>::type uint_least_type; \
+    \
+    static const BGA__CONCAT3(intPrefixArg, numArg, _t) min_value =  BGA__CONCAT3(intPrefixUpperArg, numArg, _MIN); \
+    static const BGA__CONCAT3(intPrefixArg, numArg, _t) max_value =  BGA__CONCAT3(intPrefixUpperArg, numArg, _MAX); \
+    \
+    static const int bit_width = sizeof(BGA__CONCAT3(intPrefixArg, numArg, _t)) * 8; \
+  } \
+;
+
+#define BGA__GEN_INT_TYPE_TRAIT__I_AND_U(numArg) \
+  BGA__GEN_INT_TYPE_TRAIT(int, INT, numArg) \
+  BGA__GEN_INT_TYPE_TRAIT(uint, UINT, numArg) \
+;
+
+BGA__GEN_INT_TYPE_TRAIT__I_AND_U(8);
+BGA__GEN_INT_TYPE_TRAIT__I_AND_U(16);
+BGA__GEN_INT_TYPE_TRAIT__I_AND_U(32);
+#ifdef UINT64_MAX
+  BGA__GEN_INT_TYPE_TRAIT__I_AND_U(64);
+#endif
+
+#undef BGA__GEN_INT_TYPE_TRAIT__I_AND_U
+#undef BGA__GEN_INT_TYPE_TRAIT
+
+#pragma pop_macro("_MAX")
+#pragma pop_macro("_MIN")
+
+} //# namespace
+
 #define BGA__GEN_STATIC_ASSERT_XX_HELPER(nameArg, exprArg) \
 	template<IntMax a, IntMax b> struct nameArg { \
 		struct _ {  }; \
