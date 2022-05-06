@@ -251,6 +251,40 @@ BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_hasBit_helper, a & (UIntMax(1) <<
 BGA__GEN_STATIC_ASSERT_XX_HELPER(static_assert_test_helper, !!b)
 #define static_assert_test(aArg, testAExprArg) struct BGA__UNIQUE_NAME { static const IntMax x = (aArg); BGA__STATIC_ASSERT_XX(static_assert_test_helper, x, (testAExprArg)); }
 
+#if 0
+  static_assert_type_eq(void, void) //# OK 
+  static_assert_type_eq(void, int) //# FAIL 
+#endif
+template<class AArg, class BArg> 
+struct static_assert_type_eq_helper {
+
+};
+template<class AArg> 
+struct static_assert_type_eq_helper<AArg, AArg> {
+	static_assert_type_eq_helper(int) {  }
+};
+
+#define static_assert_type_eq(AArg, BArg) \
+	struct BGA__UNIQUE_NAME { void dummy() { const static_assert_type_eq_helper< AArg, BArg > x(1); } } \
+;
+
+#if 0
+  static_assert_type_neq(void, int) //# OK 
+  static_assert_type_neq(void, void) //# FAIL 
+#endif
+template<class AArg, class BArg> 
+struct static_assert_type_neq_helper {
+	static_assert_type_neq_helper(int) {  }
+};
+template<class AArg> 
+struct static_assert_type_neq_helper<AArg, AArg> {
+
+};
+
+#define static_assert_type_neq(AArg, BArg) \
+	struct BGA__UNIQUE_NAME { void dummy() { const static_assert_type_neq_helper< AArg, BArg > x(1); } } \
+;
+
 
 template<typename TArg> TArg Math_abs(const TArg& x) {
   #define BGA__MATH__ABS(x) (((x) < 0) ? -(x) : (x))
