@@ -19,6 +19,8 @@
 #if defined(__IAR_SYSTEMS_ICC__ )
 	//# to define xINTn_C macros in stdint.h
 	#define __STDC_CONSTANT_MACROS
+	//# to define xINTn_{MIN|MAX} macros in stdint.h
+	#define __STDC_LIMIT_MACROS
 #endif
 
 #include <cstdint>
