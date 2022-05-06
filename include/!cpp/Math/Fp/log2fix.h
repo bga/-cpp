@@ -53,16 +53,9 @@
 namespace Math { namespace Fp {  
 
 namespace Log2fix { namespace details {
-	template<class TArg> struct DoublePrec;
-	template<> struct DoublePrec<uint8_t> { typedef uint16_t Ret; };
-	template<> struct DoublePrec<int8_t> { typedef int16_t Ret; };
-	template<> struct DoublePrec<uint16_t> { typedef uint32_t Ret; };
-	template<> struct DoublePrec<int16_t> { typedef int32_t Ret; };
-	#ifdef UINT64_MAX
-		template<> struct DoublePrec<uint32_t> { typedef uint64_t Ret; };
-		template<> struct DoublePrec<int32_t> { typedef int64_t Ret; };
-	#endif
-
+	template<class TArg> struct DoublePrec {
+		typedef typename ::Bga::make_double_int_nocv<TArg>::type Ret;
+	};
 	template<class TArg> struct ToSigned {
 		typedef typename ::std::make_signed<TArg>::type Ret;
 	};
