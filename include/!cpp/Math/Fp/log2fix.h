@@ -63,10 +63,9 @@ namespace Log2fix { namespace details {
 		template<> struct DoublePrec<int32_t> { typedef int64_t Ret; };
 	#endif
 
-	template<class TArg> struct ToSigned;
-	template<> struct ToSigned<uint8_t> { typedef int8_t Ret; };
-	template<> struct ToSigned<uint16_t> { typedef int16_t Ret; };
-	template<> struct ToSigned<uint32_t> { typedef int32_t Ret; };
+	template<class TArg> struct ToSigned {
+		typedef typename ::std::make_signed<TArg>::type Ret;
+	};
 	
 	template<class TArg> struct Consts;
 	template<> struct Consts<uint8_t> { enum { INV_LOG2_E_Q0DOT_N = UINT8_C(177), INV_LOG2_10_Q0DOT_N =  UINT8_C(77) }; };
