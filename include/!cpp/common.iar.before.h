@@ -22,5 +22,7 @@
 	#define override
 	//# IAR 8 does not support { constexpr }
 	#define BGA__MAYBE_CONSTEXPR
+
+	#define BGA__CXX__NO_NULLPTR
 #endif
 #define __asm__ asm
