@@ -109,6 +109,16 @@ typedef bool Bool;
 
 namespace Bga {
 
+template<class TArg, class DefaultTArg>
+struct void_to_default {
+  typedef TArg type;
+};
+template<class DefaultTArg>
+struct void_to_default<void, DefaultTArg> {
+  typedef DefaultTArg type;
+};
+
+
 template<class T> 
 struct int_type_traits;
 
