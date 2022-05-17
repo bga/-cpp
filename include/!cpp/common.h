@@ -30,6 +30,13 @@
   #include "common.gcc.before.h"
 #endif
 
+#if defined(__clang__)
+  #include "common.clang.before.h"
+#endif
+
+#if defined(_MSC_VER)
+  #include "common.msvc.before.h"
+#endif
 
 
 //#define override
