@@ -194,6 +194,14 @@ template<unsigned bitWidthArg, class FailArg = void>
 struct make_unsigned_from_bit_width {
   typedef typename ::std::make_unsigned<typename make_signed_from_bit_width<bitWidthArg, FailArg>::type>::type type;
 };
+template<class IntArg, unsigned bitWidthArg, class FailArg = void>
+struct make_int_from_bit_width {
+  typedef typename ::std::conditional< 
+    ::std::is_unsigned<IntArg>::value, 
+    typename make_unsigned_from_bit_width<bitWidthArg, FailArg>::type, 
+    typename make_signed_from_bit_width<bitWidthArg, FailArg>::type
+  >::type type;
+};
 
 template<class IntArg>
 struct make_signed_half_int_nocv {
