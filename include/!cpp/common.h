@@ -18,10 +18,6 @@
 
 #include <!cpp/common_macro.h>
 
-#include <!cpp/wrapper/cstdint>
-#include <!cpp/wrapper/cstddef>
-#include <!cpp/wrapper/type_traits>
-
 #if defined(__IAR_SYSTEMS_ICC__ )
   #include "common.iar.before.h"
 #endif
@@ -37,6 +33,11 @@
 #if defined(_MSC_VER)
   #include "common.msvc.before.h"
 #endif
+
+
+#include <!cpp/wrapper/cstdint>
+#include <!cpp/wrapper/cstddef>
+#include <!cpp/wrapper/type_traits>
 
 
 //#define override
