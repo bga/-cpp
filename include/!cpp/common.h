@@ -171,6 +171,7 @@ BGA__GEN_INT_TYPE_TRAIT__I_AND_U(32);
 #pragma pop_macro("_MIN")
 
 
+namespace details {
 template<unsigned bitWidthArg>
 struct make_signed_from_bit_width {
   typedef typename ::std::conditional<bitWidthArg <= 8, I8, 
@@ -183,10 +184,15 @@ struct make_signed_from_bit_width {
     >::type
   >::type type;
 };
+} //# namespace
 
-template<unsigned bitWidthArg>
+template<unsigned bitWidthArg, class FailArg = void>
+struct make_signed_from_bit_width {
+  typedef typename ::Bga::void_to_default<typename details::make_signed_from_bit_width<bitWidthArg>::type, FailArg>::type type;
+};
+template<unsigned bitWidthArg, class FailArg = void>
 struct make_unsigned_from_bit_width {
-  typedef typename ::std::make_unsigned<typename make_signed_from_bit_width<bitWidthArg>::type>::type type;
+  typedef typename ::std::make_unsigned<typename make_signed_from_bit_width<bitWidthArg, FailArg>::type>::type type;
 };
 
 template<class IntArg>
@@ -197,13 +203,13 @@ template<class IntArg>
 struct make_unsigned_half_int_nocv {
   typedef typename ::std::make_unsigned<typename make_signed_half_int_nocv<IntArg>::type>::type type;
 };
-template<class IntArg>
+template<class IntArg, class FailArg = void>
 struct make_signed_double_int_nocv {
-  typedef typename make_signed_from_bit_width<int_type_traits<IntArg>::bit_width * 2>::type type;
+  typedef typename make_signed_from_bit_width<int_type_traits<IntArg>::bit_width * 2, FailArg>::type type;
 };
-template<class IntArg>
+template<class IntArg, class FailArg = void>
 struct make_unsigned_double_int_nocv {
-  typedef typename ::std::make_unsigned<typename make_signed_double_int_nocv<IntArg>::type>::type type;
+  typedef typename ::std::make_unsigned<typename make_signed_double_int_nocv<IntArg, FailArg>::type>::type type;
 };
 
 template<class IntArg>
@@ -214,11 +220,11 @@ struct make_half_int_nocv {
   >::type type;
 };
 
-template<class IntArg>
+template<class IntArg, class FailArg = void>
 struct make_double_int_nocv {
   typedef typename ::std::conditional< ::std::is_signed<IntArg>::value, 
-    typename make_signed_double_int_nocv<IntArg>::type, 
-    typename make_unsigned_double_int_nocv<IntArg>::type 
+    typename make_signed_double_int_nocv<IntArg, FailArg>::type, 
+    typename make_unsigned_double_int_nocv<IntArg, FailArg>::type 
   >::type type;
 };
 
