@@ -122,6 +122,20 @@ typedef bool Bool;
 
 namespace Bga {
 
+#ifndef BGA__INSPECT_TYPE
+
+namespace details {
+template<class TArg>
+struct static_inspect_type__impl {
+	
+};
+} //# namespace
+
+#define BGA__INSPECT_TYPE(TArg) \
+	struct BGA__UNIQUE_NAME { void dummy() { const ::Bga::details::static_inspect_type__impl< TArg > x(1); (void)x; } } \
+;
+#endif
+
 template<class TArg, class DefaultTArg>
 struct void_to_default {
   typedef TArg type;
