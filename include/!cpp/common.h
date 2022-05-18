@@ -35,6 +35,11 @@
 #endif
 
 
+#ifndef BGA__MAYBE_CONSTEXPR
+  #define BGA__MAYBE_CONSTEXPR
+#endif
+
+
 #include <!cpp/wrapper/cstdint>
 #include <!cpp/wrapper/cstddef>
 #include <!cpp/wrapper/type_traits>

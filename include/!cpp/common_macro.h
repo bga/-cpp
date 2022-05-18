@@ -30,9 +30,6 @@
 #define BGA__TEMPLATE__ENABLE_IF(condExprArg) typename ::std::enable_if<(condExprArg), int>::type = 0
 
 
-#ifndef BGA__MAYBE_CONSTEXPR
-  #define BGA__MAYBE_CONSTEXPR
-#endif
 
 #define BGA__STR(x) BGA__STR_IMPL(x)
 #define BGA__STR_IMPL(x) #x
