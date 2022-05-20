@@ -41,10 +41,11 @@ struct Self {
 	Char const* lastP;
 	Char const** keyValuePairsArray;
 	Char const delimiter;
+	Char const listDelimiter;
 	Size chunkN;
 	
-	Self(Char const* tml_, Char const* keyValuePairsArray_[], Char const delimiter_ = '%')
-		: lastP(tml_), keyValuePairsArray(keyValuePairsArray_), delimiter(delimiter_) {
+	Self(Char const* tml_, Char const* keyValuePairsArray_[], Char const delimiter_ = '%', Char const listDelimiter_ = '\0')
+		: lastP(tml_), keyValuePairsArray(keyValuePairsArray_), delimiter(delimiter_), listDelimiter(listDelimiter_) {
 		this->chunkN = Size(-1);
 	}
 	
@@ -100,26 +101,26 @@ struct Self {
 		Char const** kvs = this->keyValuePairsArray;
 		while(*kvs != nullptr) {
 			Char const* kv = *kvs;
-			while(*kv != 0) {
+			while(*kv != this->listDelimiter) {
 				debug Debug_print("%.2s", kv);
 
 				Bool isMatch = true;
 				Char const* nameP = name;
-				while(*kv != 0 && nameP != nameEnd) {
+				while(*kv != this->listDelimiter && nameP != nameEnd) {
 					if(*kv != *nameP) {
 						isMatch = false;
 					};
 					kv += 1;
 					nameP += 1;
 				}
-				isMatch = isMatch && *kv == 0 && nameP == nameEnd;
-				while(*kv != 0) {
+				isMatch = isMatch && *kv == this->listDelimiter && nameP == nameEnd;
+				while(*kv != this->listDelimiter) {
 					kv += 1;
 				}
 				kv += 1;
 				Char const* vBegin = kv;
 				
-				while(*kv != 0) {
+				while(*kv != this->listDelimiter) {
 					kv += 1;
 				}
 				
@@ -166,7 +167,10 @@ example(BGA__STR(Self)) {
 	typedef ::Bga::String::Tml::Self<char> Self;
 	// typedef typename Self::Ret Tml_Ret;
 
-	#define BGA__STRING__TML__CHUNK_GEN__TEST__ASSERT_EQ(tmlArg, expectedValueArg, varDataArg...) if(1) { char const* varData[] =  varDataArg; assert_eq(collectAllChunks(Self(tmlArg, varData)), ::std::basic_string<char>(expectedValueArg)); }
+	char delimiter = '%';
+	char listDelimiter = '\0';
+	
+	#define BGA__STRING__TML__CHUNK_GEN__TEST__ASSERT_EQ(tmlArg, expectedValueArg, varDataArg...) if(1) { char const* varData[] =  varDataArg; assert_eq(collectAllChunks(Self(tmlArg, varData, delimiter, listDelimiter)), ::std::basic_string<char>(expectedValueArg)); }
 	
 	BGA__STRING__TML__CHUNK_GEN__TEST__ASSERT_EQ("", "", { nullptr });
 	BGA__STRING__TML__CHUNK_GEN__TEST__ASSERT_EQ("abc", "abc", { nullptr });
@@ -179,6 +183,17 @@ example(BGA__STR(Self)) {
 	BGA__STRING__TML__CHUNK_GEN__TEST__ASSERT_EQ("%var_%", "%var_%", { "var\0value\0\0", nullptr });
 	BGA__STRING__TML__CHUNK_GEN__TEST__ASSERT_EQ("%va%", "%va%", { "var\0value\0\0", nullptr });
 	BGA__STRING__TML__CHUNK_GEN__TEST__ASSERT_EQ("%%", "%", { "var\0value\0\0", nullptr });
+	
+	if(1) {
+		char delimiter = '$';
+		BGA__STRING__TML__CHUNK_GEN__TEST__ASSERT_EQ("$var$", "value", { "var\0value\0\0", nullptr });
+	};
+	
+	if(1) {
+		char listDelimiter = ':';
+		BGA__STRING__TML__CHUNK_GEN__TEST__ASSERT_EQ("%var%", "value1", { "var:value1:var:value2::", nullptr });
+	};
+	
 	#undef BGA__STRING__TML__CHUNK_GEN__TEST__ASSERT_EQ
 }
 #endif
