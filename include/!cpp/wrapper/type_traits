@@ -7,12 +7,21 @@
 #include <!cpp/wrapper/cstdint>
 
 namespace std {
-struct true_type {
-	enum { value = true };
+template<class TArg, TArg vArg>
+struct integral_constant {
+	static const BGA__MAYBE_CONSTEXPR TArg value = vArg;
+	typedef TArg value_type;
+	
+	//# using injected-class-name
+	typedef integral_constant type; 
+	
+	BGA__MAYBE_CONSTEXPR operator value_type() const /* noexcept */ { return value; }
+	
+	//# since c++14
+	BGA__MAYBE_CONSTEXPR value_type operator()() const /* noexcept */ { return value; } 
 };
-struct false_type {
-	enum { value = false };
-};
+typedef integral_constant<bool, true> true_type;
+typedef integral_constant<bool, false> false_type;
 
 template<class T1, class T2> struct is_same : public false_type {  };
 template<class T> struct is_same<T, T> : public true_type {  };
