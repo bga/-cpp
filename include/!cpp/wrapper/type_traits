@@ -114,5 +114,17 @@ BGA__DEF_CHAR_IS_XSIGNED_SPEC(struct, is_unsigned, char)
 
 #undef BGA__DEF_CHAR_IS_XSIGNED_SPEC
 
+#ifndef __cpp_lib_is_null_pointer
+	#define __cpp_lib_is_null_pointer
+
+	template<class T> struct is_null_pointer: public false_type {};
+
+	template<> struct is_null_pointer<nullptr_t>: public true_type {};
+	template<> struct is_null_pointer<nullptr_t const>: public true_type {};
+	template<> struct is_null_pointer<nullptr_t volatile>: public true_type {};
+	template<> struct is_null_pointer<nullptr_t const volatile>: public true_type {};
+#endif
+
+
 } //# namespace std
 #endif
