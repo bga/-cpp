@@ -19,6 +19,12 @@
 
 #include <utility>
 
+#if defined(__IAR_SYSTEMS_ICC__ )
+namespace std {
+	using ::swap;
+}
+#endif
+
 namespace std {
 #if 0
 template<typename T> void swap(T &a, T &b) noexept {
