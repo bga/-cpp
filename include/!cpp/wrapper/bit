@@ -37,4 +37,34 @@ namespace std {
 		};
 	}
 	#endif
+
+	#ifndef __cpp_lib_byteswap
+	#define __cpp_lib_byteswap
+	inline BGA__MAYBE_CONSTEXPR I8 byteswap(I8 v) /* noexcept */ {
+		return v;
+	}
+	inline BGA__MAYBE_CONSTEXPR U8 byteswap(U8 v) /* noexcept */ {
+		return v;
+	}
+	inline BGA__MAYBE_CONSTEXPR U16 byteswap(U16 v) /* noexcept */ {
+		return U16(U16(U8(v)) << 8) | U16(U8(v >> 8));
+	}
+	inline BGA__MAYBE_CONSTEXPR I16 byteswap(I16 v) /* noexcept */ {
+		return I16(byteswap(U16(v)));
+	}
+	inline BGA__MAYBE_CONSTEXPR U32 byteswap(U32 v) /* noexcept */ {
+		return (U32(byteswap(U16(v >> 0))) << 16) | (U32(byteswap(U16(v >> 16))) << 0); 
+	}
+	inline BGA__MAYBE_CONSTEXPR I32 byteswap(I32 v) /* noexcept */ {
+		return I32(byteswap(U32(v)));
+	}
+	#ifdef UINT64_MAX
+	inline BGA__MAYBE_CONSTEXPR U64 byteswap(U64 v) /* noexcept */ {
+		return (U64(byteswap(U32(v >> 0))) << 32) | (U64(byteswap(U32(v >> 32))) << 0); 
+	}
+	inline BGA__MAYBE_CONSTEXPR I64 byteswap(I64 v) /* noexcept */ {
+		return I64(byteswap(U64(v)));
+	}
+	#endif
+	#endif
 } //# namespace
