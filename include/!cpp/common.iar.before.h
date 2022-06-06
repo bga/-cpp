@@ -24,5 +24,13 @@
 	#define BGA__MAYBE_CONSTEXPR
 
 	#define BGA__CXX__NO_NULLPTR
+
+	#define __ORDER_LITTLE_ENDIAN__ 0
+	#define __ORDER_BIG_ENDIAN__ 1
+	#if __LITTLE_ENDIAN__
+		#define __BYTE_ORDER__ __ORDER_LITTLE_ENDIAN__
+	#else
+		#define __BYTE_ORDER__ __ORDER_BIG_ENDIAN__
+	#endif
 #endif
 #define __asm__ asm
