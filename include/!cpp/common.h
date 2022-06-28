@@ -382,6 +382,11 @@ template<class Type, Size n>
 BGA__MAYBE_CONSTEXPR Size arraySize( Type (&)[n] ) {
   return n;
 }
+#if !BGA__IS_EMPTY_MACRO(BGA__MAYBE_CONSTEXPR)
+  #define BGA__ARRAY_SIZE(arrayArg) arraySize( (arrayArg) )
+#else
+  #define BGA__ARRAY_SIZE(arrayArg) (sizeof((arrayArg)) / sizeof((arrayArg)[0]))
+#endif
 
 #ifndef nop
   inline void nop() {
