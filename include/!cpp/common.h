@@ -43,6 +43,7 @@
 #include <!cpp/shim/nullptr.h>
 
 #include <!cpp/wrapper/cstdint>
+#include <!cpp/wrapper/climits>
 #include <!cpp/wrapper/cstddef>
 #include <!cpp/wrapper/type_traits>
 
@@ -177,7 +178,7 @@ struct int_type_traits;
     static const BGA__CONCAT3(intPrefixArg, numArg, _t) min_value =  BGA__CONCAT3(intPrefixUpperArg, numArg, _MIN); \
     static const BGA__CONCAT3(intPrefixArg, numArg, _t) max_value =  BGA__CONCAT3(intPrefixUpperArg, numArg, _MAX); \
     \
-    static const int bit_width = sizeof(BGA__CONCAT3(intPrefixArg, numArg, _t)) * 8; \
+    static const int bit_width = sizeof(BGA__CONCAT3(intPrefixArg, numArg, _t)) * CHAR_BIT; \
   } \
 ;
 
