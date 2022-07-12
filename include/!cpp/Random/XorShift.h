@@ -74,7 +74,7 @@ struct Self: Base<ResultUIntArg> {
 	inline ResultUInt generate(const FU8& bitsCount) {
 		mState = details::XorShift_mix(mState);
 		
-		return mState >> (sizeof(ResultUInt) * 8 - bitsCount);
+		return mState >> (sizeof(ResultUInt) * CHAR_BIT - bitsCount);
 	}
 };
 #pragma pop_macro("Self")
