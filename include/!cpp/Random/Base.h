@@ -18,7 +18,7 @@
 
 #include <!cpp/common.h>
 
-namespace Random {
+namespace Bga { namespace Random {
 
 #pragma push_macro("Self")
 #undef Self
@@ -31,4 +31,4 @@ struct Self {
 };
 #pragma pop_macro("Self")
 
-} //# namespace Random
+} } //# namespace

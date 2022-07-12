@@ -18,7 +18,7 @@
 #include <!cpp/common.h>
 #include <!cpp/Random/Base.h>
 
-namespace Random {
+namespace Bga { namespace Random {
 #pragma push_macro("Self")
 #undef Self
 #define Self XorShift
@@ -78,4 +78,4 @@ struct Self: Base<ResultUIntArg> {
 	}
 };
 #pragma pop_macro("Self")
-} //# namespace Random
+} } //# namespace
