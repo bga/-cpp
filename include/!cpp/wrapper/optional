@@ -95,7 +95,7 @@ template<class TArg> struct Self {
 		return this->has_value() && this->m_value == v;
 	}
 	inline bool operator== (const nullopt_t& x) const {
-		return this->has_value();
+		return !this->has_value();
 	}
 	inline bool operator== (const Self& x) const {
 		return this->m_value == x.m_value && this->m_hasValue == x.m_hasValue;
