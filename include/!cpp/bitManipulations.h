@@ -70,6 +70,16 @@ template<class TArg>
 inline TArg setBitValue(TArg& vArg, unsigned bitNumberArg, bool isSet) {
   return (isSet) ? setBit(vArg, bitNumberArg) : clearBit(vArg, bitNumberArg);
 }
+template<class TArg, class T2Arg>
+inline TArg setBitMaskValueDirect(TArg& vArg, T2Arg maskArg, T2Arg setMaskArg) {
+  vArg &= ~maskArg;
+  vArg |= setMaskArg;
+  return vArg;
+}
+template<class TArg, class T2Arg>
+inline TArg setBitMaskValue(TArg& vArg, T2Arg maskArg, bool isSet) {
+  return (isSet) ? setBitMask(vArg, maskArg) : clearBitMask(vArg, maskArg);
+}
 
 template<class TArg, class T2Arg, class T3Arg>
 inline TArg setBitMaskedValues(TArg& destArg, unsigned destShiftArg, T2Arg maskArg, T3Arg srcArg) {
