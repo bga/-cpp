@@ -369,6 +369,20 @@ template<typename TArg, typename AArg, typename BArg> BGA__MAYBE_CONSTEXPR TArg 
   #define BGA__MATH__LERP(t, a, b) ((t) * ((b) - (a)) + (a))
   return BGA__MATH__LERP(t, a, b);
 }
+template<class XIntArg, class AlignIntArg> 
+BGA__MAYBE_CONSTEXPR typename ::std::enable_if<(::std::is_integral<XIntArg>::value), XIntArg>::type 
+Math_floor(XIntArg x, AlignIntArg align) {
+	#define BGA__MATH__FLOOR_INT(x, align) ((x) / (align) * (align))
+  return BGA__MATH__FLOOR_INT(x, align);
+}
+template<class XIntArg, class AlignIntArg> 
+BGA__MAYBE_CONSTEXPR typename ::std::enable_if<(::std::is_integral<XIntArg>::value), XIntArg>::type 
+Math_ceil(XIntArg x, AlignIntArg align) {
+	// #define BGA__MATH__CEIL(x, align) ((x) + (((x) < 0) ? -(align) + 1 : (align) - 1)) / (align) * (align) 
+	#define BGA__MATH__CEIL(x, align) ((((x) < 0) ? (x) - (align) + 1 : (x) + (align) - 1) / (align) * (align)) 
+  return BGA__MATH__CEIL(x, align);
+}
+
 
 namespace details {
 template<int nArg, unsigned powArg> struct Pow { static const IntMax value = nArg * Pow<nArg, powArg - 1>::value; };
