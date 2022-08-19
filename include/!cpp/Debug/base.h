@@ -179,6 +179,18 @@ namespace Bga { namespace Debug {
 		BGA__DEBUG__INSPECT(vArg) \
 		::Bga::Debug::defaultPrintBase = 10; \
 	} while(0);
+
+	#define BGA__DEBUG__INSPECT_MEM(objArg) do { \
+		::Bga::Debug::printLocation(__FILE__, __LINE__); \
+		::Bga::Debug::printExpr(BGA__STR(objArg)); \
+		::Bga::Debug::dumpArray(reinterpret_cast<U8 const*>(&(objArg)), &(reinterpret_cast<U8 const*>(&(objArg))[sizeof(objArg)])); \
+		::Bga::Debug::printEnd(); \
+	} while(0);
+	#define BGA__DEBUG__HEX_INSPECT_MEM(objArg) do { \
+		::Bga::Debug::defaultPrintBase = 16; \
+		BGA__DEBUG__INSPECT_MEM(objArg) \
+		::Bga::Debug::defaultPrintBase = 10; \
+	} while(0);
 	
 } } //# namespace
 #else
@@ -190,6 +202,8 @@ namespace Bga { namespace Debug {
 	#define BGA__DEBUG__HEX_INSPECT_ITER_RANGE(firstArg, lastArg)
 	#define BGA__DEBUG__INSPECT(vArg)
 	#define BGA__DEBUG__HEX_INSPECT(vArg)
+	#define BGA__DEBUG__INSPECT_MEM(vArg)
+	#define BGA__DEBUG__HEX_INSPECT_MEM(vArg)
 #endif
 	
 #ifndef NDEBUG
