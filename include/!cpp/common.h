@@ -47,6 +47,15 @@
 #include <!cpp/wrapper/cstddef>
 #include <!cpp/wrapper/type_traits>
 
+#ifndef BGA__ASSERT_EQ
+  #define BGA__ASSERT_EQ(aArg, bArg) do { (void)aArg; (void)bArg; } while(0);
+  #define BGA__ASSERT_NEQ(aArg, bArg) do { (void)aArg; (void)bArg; } while(0);
+  #define BGA__ASSERT_LT(aArg, bArg) do { (void)aArg; (void)bArg; } while(0);
+  #define BGA__ASSERT_LTE(aArg, bArg) do { (void)aArg; (void)bArg; } while(0);
+  #define BGA__ASSERT_HAS_BIT_MASK(aArg, bArg) do { (void)aArg; (void)bArg; } while(0);
+  #define BGA__ASSERT_NOT_HAS_BIT_MASK(aArg, bArg) do { (void)aArg; (void)bArg; } while(0);
+  #define BGA__ASSERT_TEST(aArg, testExprArg) do { (void)aArg; } while(0);
+#endif
 
 //#define override
 
