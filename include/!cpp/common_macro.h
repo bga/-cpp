@@ -42,6 +42,27 @@
 #define BGA__CONCAT5(a, b, c, d, e) BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(a, b), c), d), e)
 #define BGA__CONCAT6(a, b, c, d, e, f) BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(BGA__CONCAT(a, b), c), d), e), f)
 
+#define BGA__DUP1(aArg, sepArg) aArg
+#define BGA__DUP2(aArg, sepArg) aArg sepArg aArg
+#define BGA__DUP3(aArg, sepArg) aArg sepArg aArg sepArg aArg
+#define BGA__DUP4(aArg, sepArg) BGA__DUP2(aArg, sepArg) sepArg BGA__DUP2(aArg, sepArg)
+#define BGA__DUP5(aArg, sepArg) BGA__DUP4(aArg, sepArg) sepArg BGA__DUP1(aArg, sepArg)
+#define BGA__DUP6(aArg, sepArg) BGA__DUP4(aArg, sepArg) sepArg BGA__DUP2(aArg, sepArg)
+#define BGA__DUP7(aArg, sepArg) BGA__DUP4(aArg, sepArg) sepArg BGA__DUP3(aArg, sepArg)
+#define BGA__DUP8(aArg, sepArg) BGA__DUP4(aArg, sepArg) sepArg BGA__DUP4(aArg, sepArg)
+#define BGA__DUP9(aArg, sepArg) BGA__DUP5(aArg, sepArg) sepArg BGA__DUP4(aArg, sepArg)
+#define BGA__DUP10(aArg, sepArg) BGA__DUP5(aArg, sepArg) sepArg BGA__DUP5(aArg, sepArg)
+#define BGA__DUP16(aArg, sepArg) BGA__DUP8(aArg, sepArg) sepArg BGA__DUP8(aArg, sepArg)
+#define BGA__DUP24(aArg, sepArg) BGA__DUP16(aArg, sepArg) sepArg BGA__DUP8(aArg, sepArg)
+#define BGA__DUP32(aArg, sepArg) BGA__DUP16(aArg, sepArg) sepArg BGA__DUP16(aArg, sepArg)
+#define BGA__DUP48(aArg, sepArg) BGA__DUP32(aArg, sepArg) sepArg BGA__DUP16(aArg, sepArg)
+#define BGA__DUP64(aArg, sepArg) BGA__DUP32(aArg, sepArg) sepArg BGA__DUP32(aArg, sepArg)
+#define BGA__DUP96(aArg, sepArg) BGA__DUP64(aArg, sepArg) sepArg BGA__DUP32(aArg, sepArg)
+#define BGA__DUP128(aArg, sepArg) BGA__DUP64(aArg, sepArg) sepArg BGA__DUP64(aArg, sepArg)
+#define BGA__DUP256(aArg, sepArg) BGA__DUP128(aArg, sepArg) sepArg BGA__DUP128(aArg, sepArg)
+#define BGA__DUP512(aArg, sepArg) BGA__DUP256(aArg, sepArg) sepArg BGA__DUP256(aArg, sepArg)
+
+
 #define BGA__PRAGMA(xArg) _Pragma(BGA__STR(xArg))
 
 #ifdef __COUNTER__
