@@ -50,7 +50,7 @@ namespace Bga { namespace Debug {
 	char* uintToString(Debug_UIntMaxFast v, FU8 base = 10, FI8 minWidth = -1);
 
 	char* intToString(Debug_IntMaxFast v, FU8 base = 10, FI8 minWidth = -1) {
-		char* str = uintToString(Math_abs(v), base, minWidth);
+		char* str = uintToString(Debug_UIntMaxFast(Math_abs(v)), base, minWidth);
 		if(v < 0) {
 			--str;
 			*str = '-'; 
@@ -61,7 +61,7 @@ namespace Bga { namespace Debug {
 		writeString("[");
 		writeString(file);
 		writeString(":");
-		writeString(uintToString(line, 10));
+		writeString(uintToString(Debug_UIntMaxFast(line), 10));
 		writeString("] ");
 	}
 	void printExpr(char const* expr) {
