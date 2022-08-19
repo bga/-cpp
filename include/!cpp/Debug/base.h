@@ -121,7 +121,7 @@ namespace Bga { namespace Debug {
 	}
 	
 	Size transformArrayIndex(SSize k, Size end) {
-		return (k < 0) ? end + k + 1 : k;
+		return (k < 0) ? Size(SSize(end) + k + 1) : Size(k);
 	}
 	#define BGA__DEBUG__INSPECT_STRING_TO_ZERO(vsArg, maxLenArg) do { \
 		::Bga::Debug::printLocation(__FILE__, __LINE__); \
