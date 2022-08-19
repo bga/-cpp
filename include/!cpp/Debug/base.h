@@ -194,16 +194,16 @@ namespace Bga { namespace Debug {
 	
 } } //# namespace
 #else
-	#define BGA__DEBUG__INSPECT_STRING_TO_MAX(vsArg, maxLenArg)
-	#define BGA__DEBUG__INSPECT_STRING_TO_ZERO(vsArg, maxLenArg)
-	#define BGA__DEBUG__INSPECT_ARRAY(vsArg, firstIndexArg, lastIndexArg)
-	#define BGA__DEBUG__HEX_INSPECT_ARRAY(vsArg, firstIndexArg, lastIndexArg)
-	#define BGA__DEBUG__INSPECT_ITER_RANGE(firstArg, lastArg)
-	#define BGA__DEBUG__HEX_INSPECT_ITER_RANGE(firstArg, lastArg)
-	#define BGA__DEBUG__INSPECT(vArg)
-	#define BGA__DEBUG__HEX_INSPECT(vArg)
-	#define BGA__DEBUG__INSPECT_MEM(vArg)
-	#define BGA__DEBUG__HEX_INSPECT_MEM(vArg)
+	#define BGA__DEBUG__INSPECT_STRING_TO_MAX(vsArg, maxLenArg) do { (void)vsArg; (void)maxLenArg; } while(0);
+	#define BGA__DEBUG__INSPECT_STRING_TO_ZERO(vsArg, maxLenArg) do { (void)vArg; (void)maxLenArg; } while(0);
+	#define BGA__DEBUG__INSPECT_ARRAY(vsArg, firstIndexArg, lastIndexArg) do { (void)vsArg; (void)firstIndexArg; (void)lastIndexArg; } while(0);
+	#define BGA__DEBUG__HEX_INSPECT_ARRAY(vsArg, firstIndexArg, lastIndexArg) do { (void)vsArg; (void)firstIndexArg; (void)lastIndexArg; } while(0);
+	#define BGA__DEBUG__INSPECT_ITER_RANGE(firstArg, lastArg) do { (void)firstArg; (void)lastArg; } while(0);
+	#define BGA__DEBUG__HEX_INSPECT_ITER_RANGE(firstArg, lastArg) do { (void)firstArg; (void)lastArg; } while(0);
+	#define BGA__DEBUG__INSPECT(vArg) (void)vArg;
+	#define BGA__DEBUG__HEX_INSPECT(vArg) (void)vArg;
+	#define BGA__DEBUG__INSPECT_MEM(vArg) (void)vArg;
+	#define BGA__DEBUG__HEX_INSPECT_MEM(vArg) (void)vArg;
 #endif
 	
 #ifndef NDEBUG
