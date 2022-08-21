@@ -59,6 +59,10 @@
 
 //#define override
 
+typedef char Char;
+typedef signed char SChar;
+typedef unsigned char UChar;
+
 typedef int8_t I8;
 typedef uint8_t U8;
 typedef int16_t I16;
