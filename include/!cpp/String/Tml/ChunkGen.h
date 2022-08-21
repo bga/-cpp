@@ -39,13 +39,18 @@ struct Self {
 	typedef ::Bga::String::StringView<Char> Ret;
 
 	Char const* lastP;
-	Char const** keyValuePairsArray;
+	Char const* const* keyValuePairsArray;
 	Char const delimiter;
 	Char const listDelimiter;
 	Size chunkN;
 	
-	Self(Char const* tml_, Char const* keyValuePairsArray_[], Char const delimiter_ = '%', Char const listDelimiter_ = '\0')
+	Self(Char const* tml_, Char const* const* keyValuePairsArray_, Char const delimiter_ = '%', Char const listDelimiter_ = '\0')
 		: lastP(tml_), keyValuePairsArray(keyValuePairsArray_), delimiter(delimiter_), listDelimiter(listDelimiter_) {
+		this->chunkN = Size(-1);
+	}
+	
+	void reset(Char const* tml_) {
+		this->lastP = tml_;
 		this->chunkN = Size(-1);
 	}
 	
@@ -98,7 +103,7 @@ struct Self {
 			return ret;
 		};
 		
-		Char const** kvs = this->keyValuePairsArray;
+		Char const* const* kvs = this->keyValuePairsArray;
 		while(*kvs != nullptr) {
 			Char const* kv = *kvs;
 			while(*kv != this->listDelimiter) {
