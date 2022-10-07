@@ -415,6 +415,10 @@ BGA__MAYBE_CONSTEXPR Size arraySize( Type (&)[n] ) {
   #define BGA__ARRAY_SIZE(arrayArg) (sizeof((arrayArg)) / sizeof((arrayArg)[0]))
 #endif
 
+template<class DataArg, Size alignArg> struct AlignSize: public DataArg {
+	Char BGA__UNIQUE_NAME[BGA__MATH__CEIL(sizeof(DataArg), alignArg) - sizeof(DataArg)];
+};
+
 #ifndef nop
   inline void nop() {
 
