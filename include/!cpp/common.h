@@ -388,12 +388,15 @@ Math_ceil(XIntArg x, AlignIntArg align) {
 }
 
 
+namespace Bga { 
+
 namespace details {
 template<IntMax nArg, unsigned powArg> struct Pow { static const IntMax value = nArg * Pow<nArg, powArg - 1>::value; };
 template<IntMax nArg> struct Pow<nArg, 0> { static const IntMax value = 1; };
 } //# namespace
-#define BGA__MATH__POW_INT(nArg, powArg) details::Pow<(nArg), (powArg)>::value 
+#define BGA__MATH__POW_INT(nArg, powArg) ::Bga::details::Pow<(nArg), (powArg)>::value 
 
+} //# namespace
 
 #if 0
 #include <!cpp/wrapper/cstdlib>
