@@ -215,23 +215,34 @@ inline void cycleDec(IntArg& vArg, const IntArg& maxVArg) {
 }
 
 
+namespace Bga { namespace details { 
 template<UIntMax x> struct IntToMaskHelperClass {
-  #define GEN_SHIFT(aArg, bArg, shiftArg) static const UIntMax BGA__CONCAT(x, bArg) = BGA__CONCAT(x, aArg) | (BGA__CONCAT(x, aArg) >> ((((shiftArg) / 4) <= sizeof(UIntMax)) ? (shiftArg) : 0));
+  #define BGA__INT_TO_MASK__GEN_SHIFT(aArg, bArg, shiftArg) static const UIntMax BGA__CONCAT(x, bArg) = BGA__CONCAT(x, aArg) | (BGA__CONCAT(x, aArg) >> ((((shiftArg) / 4) <= sizeof(UIntMax)) ? (shiftArg) : 0));
 
   static const UIntMax x1 = x;
 
-  GEN_SHIFT(1, 2, 32)
-  GEN_SHIFT(2, 3, 16)
-  GEN_SHIFT(3, 4,  8)
-  GEN_SHIFT(4, 5,  4)
-  GEN_SHIFT(5, 6,  2)
-  GEN_SHIFT(6, 7,  1)
+  BGA__INT_TO_MASK__GEN_SHIFT(1, 2, 32)
+  BGA__INT_TO_MASK__GEN_SHIFT(2, 3, 16)
+  BGA__INT_TO_MASK__GEN_SHIFT(3, 4,  8)
+  BGA__INT_TO_MASK__GEN_SHIFT(4, 5,  4)
+  BGA__INT_TO_MASK__GEN_SHIFT(5, 6,  2)
+  BGA__INT_TO_MASK__GEN_SHIFT(6, 7,  1)
 
-  #undef GEN_SHIFT
+  #undef BGA__INT_TO_MASK__GEN_SHIFT
 
   static const UIntMax result = x7;
 };
+} } //# namespace
 
-#define intToMaskConstExpr(xArg) IntToMaskHelperClass<(xArg)>::result
+#define intToMaskConstExpr(xArg) (::Bga::details::IntToMaskHelperClass<(xArg)>::result)
 
-#define intToMaskConstExpr(xArg) IntToMaskHelperClass<(xArg)>::result
+#ifdef BGA__TESTRUNNER_ON
+  static_assert_eq(intToMaskConstExpr(0), 0);
+  static_assert_eq(intToMaskConstExpr(1), 1);
+  static_assert_eq(intToMaskConstExpr(2), 3);
+  static_assert_eq(intToMaskConstExpr(3), 3);
+  static_assert_eq(intToMaskConstExpr(4), 7);
+  static_assert_eq(intToMaskConstExpr(6), 7);
+  static_assert_eq(intToMaskConstExpr(7), 7);
+  static_assert_eq(intToMaskConstExpr(8), 15);
+#endif
