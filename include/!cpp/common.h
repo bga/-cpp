@@ -396,6 +396,12 @@ template<IntMax nArg> struct Pow<nArg, 0> { static const IntMax value = 1; };
 } //# namespace
 #define BGA__MATH__POW_INT(nArg, powArg) ::Bga::details::Pow<(nArg), (powArg)>::value 
 
+namespace details {
+template<UIntMax nArg, unsigned powArg> struct PowU { static const UIntMax value = nArg * PowU<nArg, powArg - 1>::value; };
+template<UIntMax nArg> struct PowU<nArg, 0> { static const UIntMax value = 1; };
+} //# namespace
+#define BGA__MATH__POW_UINT(nArg, powArg) ::Bga::details::PowU<(nArg), (powArg)>::value 
+
 } //# namespace
 
 #if 0
