@@ -402,6 +402,54 @@ template<UIntMax nArg> struct PowU<nArg, 0> { static const UIntMax value = 1; };
 } //# namespace
 #define BGA__MATH__POW_UINT(nArg, powArg) ::Bga::details::PowU<(nArg), (powArg)>::value 
 
+namespace details {
+template<UIntMax x, UIntMax y, UIntMax n, bool cond = ((n) < (sizeof(UIntMax) * CHAR_BIT) && (y << (n)) <= x)> struct Log2FloorImpl;
+template<UIntMax x, UIntMax y, UIntMax n> struct Log2FloorImpl<x, y, n, false> { static const UIntMax value = n - 1; };
+template<UIntMax x, UIntMax y, UIntMax n> struct Log2FloorImpl<x, y, n, true>: public Log2FloorImpl<x, y, n + 1> {};
+template<UIntMax x, UIntMax y, BGA__TEMPLATE__ENABLE_IF(0 < x)> struct Log2Floor: public Log2FloorImpl<x, y, 0> {};
+
+//# find n where yArg * 2 ** (n - 1) <= xArg < yArg * 2 ** n
+#define BGA__MATH__INT_LOG2_FLOOR2(xArg, yArg) ( ::Bga::details::Log2Floor<(xArg), (yArg)>::value)
+
+//# find n where yArg * 2 ** (n - 1) <= xArg < yArg * 2 ** n
+#define BGA__MATH__INT_LOG2_FLOOR(xArg) BGA__MATH__INT_LOG2_FLOOR2(xArg, 1)
+
+#ifdef BGA__TESTRUNNER_ON
+	static_assert_eq(BGA__MATH__INT_LOG2_FLOOR(1), 0);
+	static_assert_eq(BGA__MATH__INT_LOG2_FLOOR(2), 1);
+	static_assert_eq(BGA__MATH__INT_LOG2_FLOOR(3), 1);
+	static_assert_eq(BGA__MATH__INT_LOG2_FLOOR(4), 2);
+	static_assert_eq(BGA__MATH__INT_LOG2_FLOOR(15), 3);
+	static_assert_eq(BGA__MATH__INT_LOG2_FLOOR(16), 4);
+	static_assert_eq(BGA__MATH__INT_LOG2_FLOOR(17), 4);
+	static_assert_eq(BGA__MATH__INT_LOG2_FLOOR2(100 * 17, 100), 4);
+#endif // BGA__TESTRUNNER_ON
+} //# namespace
+
+namespace details {
+template<UIntMax x, UIntMax y, UIntMax n, bool cond = ((n) < (sizeof(UIntMax) * CHAR_BIT) && (y << (n)) < x)> struct Log2CeilImpl;
+template<UIntMax x, UIntMax y, UIntMax n> struct Log2CeilImpl<x, y, n, false> { static const UIntMax value = n; };
+template<UIntMax x, UIntMax y, UIntMax n> struct Log2CeilImpl<x, y, n, true>: public Log2CeilImpl<x, y, n + 1> {};
+template<UIntMax x, UIntMax y, BGA__TEMPLATE__ENABLE_IF(0 < x)> struct Log2Ceil: public Log2CeilImpl<x, y, 0> {};
+
+//# find n where yArg * 2 ** (n - 1) < xArg <= yArg * 2 ** n
+#define BGA__MATH__INT_LOG2_CEIL2(xArg, yArg) ( ::Bga::details::Log2Ceil<(xArg), (yArg)>::value)
+
+//# find n where 2 ** (n - 1) < xArg <= 2 ** n
+#define BGA__MATH__INT_LOG2_CEIL(xArg) BGA__MATH__INT_LOG2_CEIL2(xArg, 1)
+
+#ifdef BGA__TESTRUNNER_ON
+	static_assert_eq(BGA__MATH__INT_LOG2_CEIL(1), 0);
+	static_assert_eq(BGA__MATH__INT_LOG2_CEIL(2), 1);
+	static_assert_eq(BGA__MATH__INT_LOG2_CEIL(3), 2);
+	static_assert_eq(BGA__MATH__INT_LOG2_CEIL(4), 2);
+	static_assert_eq(BGA__MATH__INT_LOG2_CEIL(15), 4);
+	static_assert_eq(BGA__MATH__INT_LOG2_CEIL(16), 4);
+	static_assert_eq(BGA__MATH__INT_LOG2_CEIL(17), 5);
+	static_assert_eq(BGA__MATH__INT_LOG2_CEIL2(100 * 17, 100), 5);
+#endif // BGA__TESTRUNNER_ON
+} //# namespace
+
 } //# namespace
 
 #if 0
