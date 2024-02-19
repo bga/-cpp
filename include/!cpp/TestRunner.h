@@ -26,6 +26,13 @@ example("x") {
 };
 #endif
 
+#ifdef assert_eq
+  #undef assert_eq
+#endif
+#ifdef assert_not_eq
+  #undef assert_not_eq
+#endif
+
 #ifdef BGA__TESTRUNNER_ON
 
 #include <!cpp/wrapper/iostream>
@@ -36,13 +43,23 @@ example("x") {
   #define BGA__TESTRUNNER_OUTPUT_STREAM ::std::cerr
 #endif  
 
+namespace TestRunnerNS {
+  char const* userDefinedScope = nullptr;
+  ::std::string getUserDefinedScope() {
+    return (userDefinedScope == nullptr) ? "" : ::std::string("(") + userDefinedScope + ")";
+  }
+  void setUserDefinedScope(char const* userDefinedScope_) {
+    userDefinedScope = userDefinedScope_;
+  }
+}
+
 template<typename AArg, typename BArg> 
 void _assert_not_eq(const char* fileName, int lineNo, const AArg& a, const BArg& b) {
   if(a != b) {
   
   }
   else {
-    BGA__TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED: " << a << " != " << b << ::std::endl;
+    BGA__TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED" <<  TestRunnerNS::getUserDefinedScope() << ": " << a << " != " << b << ::std::endl;
   }
 }
 #define assert_not_eq(aArg, bArg) _assert_not_eq(__FILE__, __LINE__, (aArg), (bArg))
@@ -53,7 +70,7 @@ void _assert_eq(const char* fileName, int lineNo, const AArg& a, const BArg& b) 
   
   }
   else {
-    BGA__TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED: " << a << " == " << b << ::std::endl;
+    BGA__TESTRUNNER_OUTPUT_STREAM << '[' << fileName << ':' << lineNo << "] FAILED" <<  TestRunnerNS::getUserDefinedScope() << ": " << a << " == " << b << ::std::endl;
   }
 }
 #define assert_eq(aArg, bArg) _assert_eq(__FILE__, __LINE__, (aArg), (bArg))
