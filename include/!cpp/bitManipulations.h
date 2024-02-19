@@ -188,7 +188,7 @@ inline IntArg cycleInc(IntArg& vArg, const MaxIntArg& maxVArg) {
   }
   else {
     vArg += 1;
-    if(vArg == maxVArg) {
+    if(maxVArg <= vArg) {
       vArg = 0;
     }
     else {
@@ -205,11 +205,11 @@ inline void cycleDec(IntArg& vArg, const IntArg& maxVArg) {
     vArg &= maxVArg - 1;
   }
   else {
-    if(vArg == 0) {
+    if(vArg <= 0) {
       vArg = maxVArg - 1;
     }
     else {
-      vArg += 1;
+      vArg -= 1;
     }
   }
 }
@@ -217,7 +217,7 @@ inline void cycleDec(IntArg& vArg, const IntArg& maxVArg) {
 
 namespace Bga { namespace details { 
 template<UIntMax x> struct IntToMaskHelperClass {
-  #define BGA__INT_TO_MASK__GEN_SHIFT(aArg, bArg, shiftArg) static const UIntMax BGA__CONCAT(x, bArg) = BGA__CONCAT(x, aArg) | (BGA__CONCAT(x, aArg) >> ((((shiftArg) / 4) <= sizeof(UIntMax)) ? (shiftArg) : 0));
+  #define BGA__INT_TO_MASK__GEN_SHIFT(aArg, bArg, shiftArg) static const UIntMax BGA__CONCAT(x, bArg) = BGA__CONCAT(x, aArg) | (BGA__CONCAT(x, aArg) >> ((((shiftArg) * 2 / CHAR_BIT) <= sizeof(UIntMax)) ? (shiftArg) : 0));
 
   static const UIntMax x1 = x;
 
