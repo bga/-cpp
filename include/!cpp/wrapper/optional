@@ -14,6 +14,8 @@
   limitations under the License.
 */
 
+#pragma once
+
 #if 201703L <= __cplusplus
 	#include <optional>
 #else
