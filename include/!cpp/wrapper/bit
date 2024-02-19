@@ -46,6 +46,7 @@ namespace std {
 	inline BGA__MAYBE_CONSTEXPR U8 byteswap(U8 v) /* noexcept */ {
 		return v;
 	}
+	//# FIXME asm { swapw x } for stm8
 	inline BGA__MAYBE_CONSTEXPR U16 byteswap(U16 v) /* noexcept */ {
 		return U16(U16(U8(v)) << 8) | U16(U8(v >> 8));
 	}
@@ -68,3 +69,55 @@ namespace std {
 	#endif
 	#endif
 } //# namespace
+
+#ifndef __cpp_lib_bitops
+	#define __cpp_lib_bitops
+	
+	namespace std {
+		template<class IntArg>
+		/* [[nodiscard]] */ BGA__MAYBE_CONSTEXPR IntArg rotl(IntArg x, int s) /* noexcept */ {
+			if(s < 0) {
+				return IntArg(x >> -s) | IntArg(x << (::Bga::int_type_traits<IntArg>::bit_width + s));
+			}
+			else {
+				return IntArg(x <<  s) | IntArg(x >> (::Bga::int_type_traits<IntArg>::bit_width - s));
+			}
+		}
+		template<class IntArg>
+		/* [[nodiscard]] */ BGA__MAYBE_CONSTEXPR IntArg rotr(IntArg x, int s) /* noexcept */ {
+			return rotl(x, -s);
+		}
+
+	} //# namespace
+
+	#if defined(__x86_64__) || defined(__i386__)
+		#ifdef _MSC_VER
+			#include <intrin.h>
+		#else
+			#include <x86intrin.h>  // Not just <immintrin.h> for compilers other than icc
+		#endif
+
+		namespace std {
+		template<>
+		/* [[nodiscard]] */ BGA__MAYBE_CONSTEXPR UInt rotl(UInt x, int s) /* noexcept */ {
+			return _rotl(x, s);  // gcc, icc, msvc.  Intel-defined.
+		}
+		template<>
+		/* [[nodiscard]] */ BGA__MAYBE_CONSTEXPR UInt rotr(UInt x, int s) /* noexcept */ {
+			return _rotr(x, s);  // gcc, icc, msvc.  Intel-defined.
+		}
+
+		#ifdef UINT64_MAX
+			/* [[nodiscard]] */ BGA__MAYBE_CONSTEXPR U64 rotl(U64 x, int s) /* noexcept */ {
+				return _rotl64(x, s);  // gcc, icc, msvc.  Intel-defined.
+			}
+			/* [[nodiscard]] */ BGA__MAYBE_CONSTEXPR U64 rotr(U64 x, int s) /* noexcept */ {
+				return _rotr64(v, n);  // gcc, icc, msvc.  Intel-defined.
+			}
+		#endif
+
+		} //# namespace
+
+	#endif
+
+#endif
