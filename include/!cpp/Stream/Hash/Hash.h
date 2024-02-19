@@ -65,6 +65,22 @@ struct Self {
 	HashValue bulkCalc(Value const* data, Size n) {
 		return Self(this->algo).init().add(data, n).getResult();
 	}
+	HashValue bulkCalc_charWithPad(Char const* data, Size n) {
+		Self p(this->algo);
+		
+		p.init();
+		p.add(reinterpret_cast<Value const*>(data), n / sizeof(Value));
+		if(0 < n % sizeof(Value)) {
+			Value x = 0;
+			::std::copy_n(reinterpret_cast<Char const*>(&(reinterpret_cast<Value const*>(data)[n / sizeof(Value)])), n % sizeof(Value), reinterpret_cast<Char*>(&x));
+			p.add(x);
+		};
+		return p.getResult();
+	}
+	template<class TArg>
+	HashValue bulkCalc_charWithPad(TArg const& data) {
+		return this->bulkCalc_charWithPad(reinterpret_cast<Char const*>(&data), sizeof(data));
+	}
 };
 
 template<class AlgoArg> Self<AlgoArg> makeHash(AlgoArg algo) {
