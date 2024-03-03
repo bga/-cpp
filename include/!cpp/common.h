@@ -164,23 +164,12 @@ struct void_to_default<void, DefaultTArg> {
 
 template<class T> 
 struct int_type_traits;
-
-#ifdef _MIN
-  #pragma push_macro("_MIN")
-  #undef _MIN
-#endif
-
-#ifdef _MAX
-  #pragma push_macro("_MAX")
-  #undef _MAX
-#endif
-
 #define BGA__GEN_INT_TYPE_TRAIT(intPrefixArg, intPrefixUpperArg, numArg) \
-  template<> struct int_type_traits<BGA__CONCAT3(intPrefixArg, numArg, _t)> { \
-    typedef typename ::std::make_signed<BGA__CONCAT3(intPrefixArg, numArg, _t)>::type signed_type; \
-    typedef typename ::std::make_unsigned<BGA__CONCAT3(intPrefixArg, numArg, _t)>::type unsigned_type; \
+  template<> struct int_type_traits<intPrefixArg ## numArg ## _t> { \
+    typedef typename ::std::make_signed<intPrefixArg ## numArg ## _t>::type signed_type; \
+    typedef typename ::std::make_unsigned<intPrefixArg ## numArg ## _t>::type unsigned_type; \
     \
-    typedef BGA__CONCAT4(intPrefixArg, _fast, numArg, _t) fast_type; \
+    typedef intPrefixArg ## _fast ## numArg ## _t fast_type; \
     typedef typename ::std::make_signed<fast_type>::type int_fast_type; \
     typedef typename ::std::make_unsigned<fast_type>::type uint_fast_type; \
     \
@@ -188,10 +177,10 @@ struct int_type_traits;
     typedef typename ::std::make_signed<least_type>::type int_least_type; \
     typedef typename ::std::make_unsigned<least_type>::type uint_least_type; \
     \
-    static const BGA__CONCAT3(intPrefixArg, numArg, _t) min_value =  BGA__CONCAT3(intPrefixUpperArg, numArg, _MIN); \
-    static const BGA__CONCAT3(intPrefixArg, numArg, _t) max_value =  BGA__CONCAT3(intPrefixUpperArg, numArg, _MAX); \
+    static const intPrefixArg ## numArg ## _t min_value =  intPrefixUpperArg ## numArg ## _MIN; \
+    static const intPrefixArg ## numArg ## _t max_value =  intPrefixUpperArg ## numArg ## _MAX; \
     \
-    static const int bit_width = sizeof(BGA__CONCAT3(intPrefixArg, numArg, _t)) * CHAR_BIT; \
+    static const int bit_width = sizeof(intPrefixArg ## numArg ## _t) * CHAR_BIT; \
   } \
 ;
 
@@ -210,8 +199,6 @@ BGA__GEN_INT_TYPE_TRAIT__I_AND_U(32);
 #undef BGA__GEN_INT_TYPE_TRAIT__I_AND_U
 #undef BGA__GEN_INT_TYPE_TRAIT
 
-#pragma pop_macro("_MAX")
-#pragma pop_macro("_MIN")
 
 
 namespace details {
